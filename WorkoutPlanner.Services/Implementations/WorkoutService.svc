@@ -1,0 +1,7 @@
+﻿<%@ ServiceHost 
+	Language="C#" 
+	Debug="true" 
+	Service="WorkoutPlanner.Services.Implementations.WorkoutService" 
+	CodeBehind="WorkoutService.svc.cs" 
+	Factory="WorkoutPlanner.Services.Inspectors.ServiceFactory"
+	%>

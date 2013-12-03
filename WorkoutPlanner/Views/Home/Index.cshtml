@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>Dash Board</h2>
+            </hgroup>
+            <p>
+               This is your dash board. You can create Workout which represent a set of session. Session is a division of a workout. If you have a 3 days workout that has 3 differents sets of exercises than you have 3 workout session. Each workout session contains the list of exercises to do.
+            </p>
+        </div>
+    </section>
+}
+<h3>Actions</h3>
+<ol class="round">
+    <li class="one">
+        <h5>Workout</h5>
+        @Html.ActionLink("List your workout","Index","Workout")
+    </li>
+
+    <li class="two">
+        <h5>Administrator only</h5>
+        @Html.ActionLink("Muscle Administration","Index","Muscle")
+    </li>
+
+    <li class="three">
+        <h5>Exercises Catalog</h5>
+        @Html.ActionLink("See all exercises","Index","Exercise")
+    </li>
+</ol>

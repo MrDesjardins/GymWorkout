@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:50688/Implementations/WorkoutService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Dto" />
+  <xs:element name="GetAllWorkout">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllWorkoutResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Dto" minOccurs="0" name="GetAllWorkoutResult" nillable="true" type="q1:ArrayOfFlattenWorkout" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWorkout">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="uniqueIdentifier" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWorkoutResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Dto" minOccurs="0" name="GetWorkoutResult" nillable="true" type="q2:FlattenWorkout" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

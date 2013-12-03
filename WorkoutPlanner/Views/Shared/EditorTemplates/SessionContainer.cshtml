@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ViewModels.WorkoutSessionViewModel>
+
+<ul class="workout-session-container">
+@{
+    foreach (var workoutSession in Model.OrderBy(d=>d.Order))
+    {
+        <li>
+            <h3>@workoutSession.Name</h3>
+            <ul id="session_@workoutSession.Id" class="workout-session-exercise-container" data-id="@workoutSession.Id">
+                @{
+                    foreach (var exercise in workoutSession.Exercises.OrderBy(p => p.Order))
+                    {
+                        <li class="ui-state-default" 
+                            data-session-exercise-id="@exercise.Id" 
+                            data-exercise-id="@exercise.ExerciseId">
+                            <span class="exerciseName">@exercise.ExerciseName</span>
+                            
+                            <span class="draghandle"></span>
+                            <span class="opendetailworkoutexercise"></span>
+                        </li>
+                    }
+                }
+            </ul>
+        </li>
+    }
+    
+}
+</ul>

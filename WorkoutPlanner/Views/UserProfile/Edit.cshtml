@@ -1,0 +1,41 @@
+﻿@using WorkoutPlanner.Extensions
+@model ViewModels.UserProfileViewModel
+@{
+    ViewBag.Title = "Edit Language";
+}
+<h3>Change language</h3>
+
+@using (Html.BeginForm("Edit", "UserProfile")) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Change User Profile</legend>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UserName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Language)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(d=>d.UserId)
+            @Html.Input().SelectorFor(model => model.Language, Model.Languages)
+            @Html.ValidationMessageFor(model => model.Language)
+        </div>
+        <input type="submit" value="Change Language" />
+    </fieldset>
+}

@@ -1,0 +1,106 @@
+﻿@model ViewModels.WorkoutViewModel
+
+@{
+    ViewBag.Title = "EditWithSessionEdit";
+}
+
+<h2>Edit session for workout "@Model.Name"</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset id="workouteditsessionedit">
+        <legend>WorkoutViewModel</legend>
+            
+        <div class="input-panel">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+        
+        <div class="input-panel">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Goal)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Goal)
+                @Html.ValidationMessageFor(model => model.Goal)
+            </div>
+        </div>
+        
+        <div class="input-panel">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.StartTime)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.StartTime)
+                @Html.ValidationMessageFor(model => model.StartTime)
+            </div>
+        </div>
+
+        <div class="input-panel">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.EndTime)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.EndTime)
+                @Html.ValidationMessageFor(model => model.EndTime)
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.SessionsString)
+        <div class="input-panel" style="clear:both">
+            <p>
+                <input id="btnSave" type="submit" value="Save" />
+            </p>    
+
+        </div>
+    </fieldset>
+    
+    
+    <div id="panel-designer-workout">
+        
+        <div id="left-panel-designer-workout">
+            <h2>Sessions</h2>
+            <p>@Html.ActionLink("Reorder session, add or remove session", "IndexForWorkout", "WorkoutSession", new { workoutId= Model.Id},null)</p>
+              @Html.EditorFor(d=>d.Sessions)
+        </div>
+        <div id="right-panel-designer-workout">
+            <div class="loadingAnimation" style="display:none">
+             </div>
+            <div id="detailExercise" style="display:none">
+                <h2>Detail</h2>
+                <div id="detailExercisePartial">
+                    
+                </div>
+            </div>
+            <h2>Exercises</h2>
+            @Html.EditorFor(d=>d.AvailablesExercise)
+        </div>
+        <div id="garbage-container">
+
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Workout List", "Index")
+</div>
+@{
+    //BundleTable.Bundles.GetBundleFor("~/bundles/customs").Include("~/Scripts/Customs/workouteditsessionedit.js");
+
+}
+
+@section scripts
+{
+    <script src="~/Scripts/Customs/workouteditsessionedit.js"></script>
+    <script type="text/javascript">
+        Application.Messages.SavedMessage = "@Model.SavedMessage";
+    </script>
+}

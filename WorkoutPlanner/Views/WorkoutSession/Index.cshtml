@@ -1,0 +1,46 @@
+﻿@using WorkoutPlanner.Extensions
+@model ViewModels.WorkoutViewModel
+
+@{
+    ViewBag.Title = "Sessions for Workout : " + Model.Name;
+}
+
+<h2>@ViewBag.Title</h2>
+@Html.Input().ActionImage("WorkoutSession"
+                        ,"CreateForWorkout"
+                        ,new { idWorkout = @Model.Id }
+                        , @Url.Content("~/Images/addWorkout.png")
+                        ,"Add a new workout session to the current workout")
+
+@Html.HiddenFor(d=>d.Id)
+<table id="sessiongrid" class="sortable">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th colspan="2">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var workoutSession in Model.Sessions.OrderBy(d=>d.Order))
+    {
+        <tr data-workoutsessionid="@workoutSession.Id">
+            <td>@Html.ActionLink(@workoutSession.Name, "Details", "WorkoutSession", new { id = @workoutSession.Id },null)</td>
+            <td>@Html.ActionLink("See exercises", "IndexForWorkoutSession", "WorkoutSessionExercise", new { workoutSessionId = @workoutSession.Id },null)</td>
+            <td>@Html.Input().ActionImage("WorkoutSession", "Delete", new { id = @workoutSession.Id, workoutId = @Model.Id }, "/images/bluetrash.png", "Delete", new { @class = "deleteButton" })</td>
+            <td><span class="draghandle"></span></td>
+        </tr>    
+    }
+    </tbody>
+</table>
+<br/>
+@Html.ActionLink("Workout","Details","Workout",new { id = @Model.Id },null)
+@Html.ActionLink("Workout session","EditWithSessionEdit","Workout",new { idWorkout = @Model.Id },null)
+<br/>
+<input id="btnSaveOrder" type="button" value="Save Order"/>
+<div class="loadingAnimationfixed" style="display:none;"></div>
+
+@section scripts
+{
+    <script src="~/Scripts/Customs/workoutsession.js"></script>
+}

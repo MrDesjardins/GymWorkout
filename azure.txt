@@ -1,0 +1,10 @@
+Database:
+
+User: gymadmin
+Pass: Qwerty123_
+
+
+FTP:
+
+User: workoutplanner\gymadmin
+Pass: Qwerty123_

@@ -1,0 +1,84 @@
+﻿@using WorkoutPlanner.Extensions
+@model ViewModels.WorkoutSessionExerciseViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>WorkoutSessionExerciseViewModel</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WorkoutSessionId)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.WorkoutSessionId)
+        </div>
+        
+        
+         <div class="editor-label">
+            @Html.LabelFor(model => model.ExerciseId)
+        </div>
+        <div class="editor-field">
+            @Html.Input().SelectorFor(model => model.ExerciseId, Model.ListExercise)
+            @Html.ValidationMessageFor(model => model.ExerciseId)
+        </div>
+        
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Order)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Order)
+            @Html.ValidationMessageFor(model => model.Order)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Repetitions)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Repetitions)
+            @Html.ValidationMessageFor(model => model.Repetitions)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Weights)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Weights)
+            @Html.ValidationMessageFor(model => model.Weights)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Tempo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Tempo)
+            @Html.ValidationMessageFor(model => model.Tempo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RestBetweenSetTicks)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RestBetweenSetTicks)
+            @Html.ValidationMessageFor(model => model.RestBetweenSetTicks)
+        </div>
+
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "IndexForWorkoutSession", new { workoutSessionId = Model.WorkoutSessionId})
+</div>

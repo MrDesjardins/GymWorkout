@@ -1,0 +1,51 @@
+﻿@model ViewModels.ExerciseViewModel
+
+@{
+    ViewBag.Title = "Exercise's Details";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>ExerciseViewModel</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NameFrench)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NameFrench)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NameEnglish)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NameEnglish)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MuscleName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MuscleName)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class="deleteButton"}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+
+@section scripts
+{
+    <script src="~/Scripts/Customs/exercise.js.js"></script>
+}

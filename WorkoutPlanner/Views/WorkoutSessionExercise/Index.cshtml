@@ -1,0 +1,35 @@
+﻿@model ViewModels.WorkoutSessionViewModel
+
+@{
+    ViewBag.Title = "Session's Exercises";
+}
+
+<h2>@ViewBag.Title</h2>
+@Html.ActionLink("Create a new workout session exercise","CreateForWorkoutSesssion","WorkoutSessionExercise",new { idWorkoutSession = @Model.Id },null)
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Order</th>
+            <th>Name</th>
+            <th>Repetitions</th>
+            <th>Weight</th>
+        </tr>
+    </thead>
+    @if (Model.Exercises!=null)
+    {
+        foreach (var workoutSession in Model.Exercises.OrderBy(x=>x.Order))
+        {
+            <tr>
+                <td>@Html.ActionLink("ID" + @workoutSession.Id, "Details", "WorkoutSessionExercise", new {id = @workoutSession.Id}, null)</td>
+                <td>@workoutSession.Order</td>
+                <td>@workoutSession.ExerciseName</td>
+                <td>@workoutSession.Repetitions</td>
+                <td>@workoutSession.Weights</td>
+            </tr>
+        }
+    }
+</table>
+@Html.ActionLink("Back to workout","Details","Workout",new { id = @Model.WorkoutId },null)
+|
+@Html.ActionLink("Back to session list","IndexForWorkout","WorkoutSession",new { workoutId = @Model.WorkoutId },null)

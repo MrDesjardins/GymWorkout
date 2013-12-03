@@ -1,0 +1,39 @@
+﻿@model WorkoutPlanner.ViewModels.MuscleViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>MuscleViewModel</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NameFrench)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NameFrench)
+            @Html.ValidationMessageFor(model => model.NameFrench)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NameEnglish)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NameEnglish)
+            @Html.ValidationMessageFor(model => model.NameEnglish)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

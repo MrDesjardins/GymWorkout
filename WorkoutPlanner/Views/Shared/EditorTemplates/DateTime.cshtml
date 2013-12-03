@@ -1,0 +1,10 @@
+﻿@model DateTime?
+
+@if(Model.HasValue)
+{
+    @Html.TextBox("",Model.Value.Date.ToString(WorkoutPlanner.Globals.Preferences.DateFormat), new {@class = "ui-date-picker"})
+}
+else
+{
+       @Html.TextBoxFor(m => m, new {@class = "ui-date-picker"})
+}

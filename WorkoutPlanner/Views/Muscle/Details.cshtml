@@ -1,0 +1,31 @@
+﻿@using WorkoutPlanner.Extensions
+@model WorkoutPlanner.ViewModels.MuscleViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>MuscleViewModel</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NameFrench)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NameFrench)
+    </div>
+    
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NameEnglish)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NameEnglish)
+    </div>
+
+</fieldset>
+<p>
+    @Html.Input().ActionLink("Edit | ", "Edit", null, new { id=Model.Id })
+    @Html.ActionLink("Back to List", "Index")
+</p>

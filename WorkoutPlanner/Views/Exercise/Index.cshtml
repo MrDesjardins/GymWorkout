@@ -1,0 +1,31 @@
+﻿@model IEnumerable<ViewModels.ExerciseViewModel>
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Exercises</h2>
+
+
+<table>
+    <thead>
+        <tr><th>Id</th>
+            <th>Exercise Name English</th>
+            <th>Exercise Name French</th>
+
+        </tr>
+    </thead>
+    @if (Model!=null)
+    {
+        foreach (var singleExercise in Model.OrderBy(d=>d.Id))
+        {
+            <tr>
+                <td>@Html.ActionLink("ID" + @singleExercise.Id, "Details", "Exercise", new {id = @singleExercise.Id}, null)</td>
+                <td>@singleExercise.NameEnglish</td>
+                <td>@singleExercise.NameFrench</td>
+            </tr>
+        }
+    }
+</table>
+
+<p>@Html.ActionLink("Create a new exercise", "Create")</p>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1be83f3a-478d-4d01-8bd1-c3030a306369" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:50688/Implementations/WorkoutService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WorkoutService.xsd" MetadataType="Schema" ID="fcc0bf90-d752-486c-93ca-9d62a727e23f" SourceId="1" SourceUrl="http://localhost:50688/Implementations/WorkoutService.svc?xsd=xsd2" />
+    <MetadataFile FileName="WorkoutService.disco" MetadataType="Disco" ID="888691e5-664a-41a2-8788-0c8978681d5a" SourceId="1" SourceUrl="http://localhost:50688/Implementations/WorkoutService.svc?disco" />
+    <MetadataFile FileName="WorkoutService.wsdl" MetadataType="Wsdl" ID="79e24f67-64d6-475c-af31-58e76202314b" SourceId="1" SourceUrl="http://localhost:50688/Implementations/WorkoutService.svc?wsdl" />
+    <MetadataFile FileName="WorkoutService1.xsd" MetadataType="Schema" ID="d8ebf5a7-6c5d-4132-8832-5c70c804ed14" SourceId="1" SourceUrl="http://localhost:50688/Implementations/WorkoutService.svc?xsd=xsd0" />
+    <MetadataFile FileName="WorkoutService2.xsd" MetadataType="Schema" ID="b1823ef5-21c9-4e5b-88cd-f8ca148cec25" SourceId="1" SourceUrl="http://localhost:50688/Implementations/WorkoutService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

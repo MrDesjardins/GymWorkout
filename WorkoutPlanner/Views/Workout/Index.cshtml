@@ -1,0 +1,37 @@
+﻿@using WorkoutPlanner.Extensions
+@model IEnumerable<ViewModels.WorkoutViewModel>
+
+@{
+    ViewBag.Title = "Workout List";
+}
+
+<h2>Workout List</h2>
+@Html.ActionLink("Create a new workout","Create","Workout")
+<table>
+    <thead>
+        <tr>
+            <th>Workout Name</th>
+            <th>Start Time</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    @foreach (var workout in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink(@workout.Name, "Details", "Workout", new { id = @workout.Id },null)</td>
+            <td>@workout.StartTime.ToString(WorkoutPlanner.Globals.Preferences.DateFormat)</td>
+            <td>
+                @Html.Input().ActionImage("Workout", "EditWithSessionEdit", new { idWorkout = @workout.Id }, "/images/edit.png", "Edit", new {title = "Edit workout" })
+                @Html.Input().ActionImage("WorkoutSession","IndexForWorkout", new { workoutId = @workout.Id}, "/images/detailworkoutsession.png", "Details", new {title = "See workout sessions" })
+                @Html.Input().ActionImage("Workout", "Delete", new { id = @workout.Id }, "/images/bluetrash.png", "Delete", new { id="deletebutton", title="Delete workout"})
+            </td>
+        </tr>    
+    }
+</table>
+@{
+    //BundleTable.Bundles.GetBundleFor("~/bundles/customs").Include("~/Scripts/Customs/workout.js");
+}
+@section scripts
+{
+    <script src="~/Scripts/Customs/workout.js"></script>
+}

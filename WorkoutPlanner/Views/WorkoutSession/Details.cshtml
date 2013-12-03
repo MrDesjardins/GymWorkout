@@ -1,0 +1,23 @@
+﻿@model ViewModels.WorkoutSessionViewModel
+
+@{
+    ViewBag.Title = "Details for the session " +Model.Name;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>Workout Session</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Workout list", "IndexForWorkout", new { workoutId = Model.WorkoutId})
+</p>

@@ -1,0 +1,53 @@
+﻿@model ViewModels.WorkoutSessionExerciseViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>Workout Session Exercise</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ExerciseName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ExerciseName)
+    </div>
+    
+    
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Repetitions)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Repetitions)
+    </div>
+    
+    
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Weights)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Weights)
+    </div>
+    
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Tempo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Tempo)
+    </div>
+    
+    
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RestBetweenSetTicks)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RestBetweenSetTicks)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "IndexForWorkoutSession", new { workoutSessionId = Model.WorkoutSessionId})
+</p>

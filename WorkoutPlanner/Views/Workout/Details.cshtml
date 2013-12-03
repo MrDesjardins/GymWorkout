@@ -1,0 +1,44 @@
+﻿@model ViewModels.WorkoutViewModel
+
+@{
+    ViewBag.Title = "Workout's Details";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>WorkoutViewModel</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.StartTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StartTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EndTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EndTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Goal)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Goal)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Workout session", "IndexForWorkout", "WorkoutSession", new { workoutId = @Model.Id },null)
+    @Html.ActionLink("Workout list", "Index")
+</p>

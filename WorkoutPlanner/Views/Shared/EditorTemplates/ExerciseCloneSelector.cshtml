@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ViewModels.ExerciseViewModel>
+
+
+    
+@foreach (var exerciseGroup in Model.GroupBy(d => new { Id = d.MuscleId, Name = d.MuscleName }))
+{
+    <h3>@exerciseGroup.Key.Name</h3>
+    <ul class="exercises-container-source">
+    @foreach (var exercise in exerciseGroup)
+    {
+        <li class="ui-state-default" data-session-exercise-id="" data-exercise-id="@exercise.Id">
+            <span class="exerciseName">@exercise.Name</span>
+            <span class="draghandle"></span>
+        </li>
+    }
+    </ul>
+}

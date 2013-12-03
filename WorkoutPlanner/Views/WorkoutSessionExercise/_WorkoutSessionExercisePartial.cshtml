@@ -1,0 +1,40 @@
+﻿@using WorkoutPlanner.Extensions
+@model ViewModels.WorkoutSessionExerciseViewModel
+<h3>@Model.ExerciseName for session @Model.WorkoutSessionName</h3>
+
+@Html.HiddenFor(d => d.Id)
+<div class="editor-label">
+    @Html.LabelFor(model => model.Repetitions)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Repetitions)
+    @Html.ValidationMessageFor(model => model.Repetitions)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Weights)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Weights)
+    @Html.ValidationMessageFor(model => model.Weights)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Tempo)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Tempo)
+    @Html.ValidationMessageFor(model => model.Tempo)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.RestBetweenSetTicks)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.RestBetweenSetTicks)
+    @Html.ValidationMessageFor(model => model.RestBetweenSetTicks)
+</div>
+
+<p>
+    <input id="btnSaveSessionExerciseDetail" type="submit" value="Save" />
+</p>

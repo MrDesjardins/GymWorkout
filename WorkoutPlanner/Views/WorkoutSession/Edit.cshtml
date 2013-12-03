@@ -1,0 +1,35 @@
+﻿@model ViewModels.WorkoutSessionViewModel
+
+@{
+    ViewBag.Title = "Edit session " + @Model.Name;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("EditName","WorkoutSession")) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>WorkoutSessionViewModel</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        @Html.HiddenFor(model => model.Id)
+
+        
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Workout list", "IndexForWorkout", new { workoutId = @Model.WorkoutId})
+</div>
+
