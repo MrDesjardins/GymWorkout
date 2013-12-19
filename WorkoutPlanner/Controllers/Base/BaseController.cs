@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
@@ -90,6 +91,16 @@ namespace WorkoutPlanner.Controllers.Base
 
         private void ApplyErrorsToModelState(TModel model, TViewModel viewModel)
         {
+        ICollection<ValidationResult> result;
+        ValidateDataAnnotation(model, out result);
+        foreach (ValidationResult validationResult in result)
+        {
+            foreach (string memberName in validationResult.MemberNames)
+            {
+                ModelState.AddModelError(memberName, validationResult.ErrorMessage);
+            }
+        }
+
             if (Model is IValidatableObject)
             {
                 IEnumerable<ValidationResult> errors = (Model as IValidatableObject).Validate(new ValidationContext(this));
@@ -119,7 +130,7 @@ namespace WorkoutPlanner.Controllers.Base
                 }
             }
             /*
-            //This validate underlying object which can be not fully loaded in the case of reference
+            //This validate underlying entity which can be not fully loaded in the case of reference
             ModelMetadata metadata = ModelMetadataProviders.Current.GetMetadataForType(() => Model, Model.GetType());
 
             foreach (ModelValidationResult validationResult in ModelValidator.GetModelValidator(metadata, this.ControllerContext).Validate(null))
@@ -129,6 +140,13 @@ namespace WorkoutPlanner.Controllers.Base
             }*/
         }
 
+        private bool ValidateDataAnnotation(object entity, out ICollection<ValidationResult> results)
+        {
+            var context = new ValidationContext(entity);
+            results = new List<ValidationResult>();
+            return Validator.TryValidateObject(entity, context, results, true);
+        }
+        
         protected override void OnException(ExceptionContext filterContext)
         {
             if (filterContext.Exception is DataNotFoundException)
