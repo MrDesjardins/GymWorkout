@@ -91,16 +91,18 @@ namespace WorkoutPlanner.Controllers.Base
 
         private void ApplyErrorsToModelState(TModel model, TViewModel viewModel)
         {
-        ICollection<ValidationResult> result;
-        ValidateDataAnnotation(model, out result);
-        foreach (ValidationResult validationResult in result)
-        {
-            foreach (string memberName in validationResult.MemberNames)
+            //Data Annotation validation
+            ICollection<ValidationResult> result;
+            ValidateDataAnnotation(model, out result);
+            foreach (ValidationResult validationResult in result)
             {
-                ModelState.AddModelError(memberName, validationResult.ErrorMessage);
+                foreach (string memberName in validationResult.MemberNames)
+                {
+                    ModelState.AddModelError(memberName, validationResult.ErrorMessage);
+                }
             }
-        }
 
+            //IValidatableObject validation
             if (Model is IValidatableObject)
             {
                 IEnumerable<ValidationResult> errors = (Model as IValidatableObject).Validate(new ValidationContext(this));
@@ -130,13 +132,14 @@ namespace WorkoutPlanner.Controllers.Base
                 }
             }
             /*
-            //This validate underlying entity which can be not fully loaded in the case of reference
+            //This validate underlying entity which can be not fully loaded in the case of reference. The code is simpler
+            //but it verify Data Annotation first and until all is fine validate the errors from the IValidatableObject validate method.
             ModelMetadata metadata = ModelMetadataProviders.Current.GetMetadataForType(() => Model, Model.GetType());
 
             foreach (ModelValidationResult validationResult in ModelValidator.GetModelValidator(metadata, this.ControllerContext).Validate(null))
             {
                 var propertyName = validationResult.MemberName;
-                ModelState.AddModelViewModelToErrorsMap(propertyName, validationResult.Message);
+                ModelState.AddModelError(propertyName, validationResult.Message);
             }*/
         }
 

@@ -12,7 +12,6 @@ namespace Mappers.Base
     /// <typeparam name="TViewModel">The type of the view model.</typeparam>
     public class ModelViewModelPropertiesMap<TModel, TViewModel>
     {
-        private Dictionary<Expression<Func<TModel, object>>, Expression<Func<TViewModel, object>>> PropertiesMap { get; set; }
         private Dictionary<string, string> ErrorsMap { get; set; }
 
         public ModelViewModelPropertiesMap()
@@ -22,7 +21,6 @@ namespace Mappers.Base
 
         public ModelViewModelPropertiesMap(Dictionary<Expression<Func<TModel, object>>, Expression<Func<TViewModel, object>>> propertiesMap):this()
         {
-            PropertiesMap = propertiesMap;
             foreach (var keyValuePair in propertiesMap)
             {
                 AddModelViewModelToErrorsMap(keyValuePair.Key, keyValuePair.Value);
