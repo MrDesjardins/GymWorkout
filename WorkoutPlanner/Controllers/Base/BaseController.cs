@@ -6,17 +6,20 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Threading;
+using System.Web;
 using System.Web.Mvc;
 using BusinessLogic;
 using BusinessLogic.Sessions;
+using DataAccessLayer;
 using Mappers;
 using Mappers.Factory;
 using Model;
 using Model.Definitions;
 using Services.Base;
 using Shared;
-
+using Microsoft.AspNet.Identity;
 namespace WorkoutPlanner.Controllers.Base
 {
     public abstract class BaseController<TModel, TViewModel> : Controller
@@ -50,24 +53,26 @@ namespace WorkoutPlanner.Controllers.Base
         {
             get
             {
-                UserSessionDTO currentUser = _sessionHandler.GetUser();
-                if (currentUser != null)
+                var httpUser = HttpContext.User.Identity;
+                if (httpUser.IsAuthenticated)
                 {
-                    UserProfile userProfile = _mapperFactory.UserSessionDTO.GetModel(currentUser);
-                    return userProfile;
-                }
-                else
-                {
-                    ICurrentUser currentUserFromProvider = _userProvider.Account;
-                    UserProfile fullUserProfile = _serviceFactory.Account.GetByUserName(currentUserFromProvider.UserName);
-                    if (fullUserProfile == null)//Case of a non identified user
+                    ApplicationUser fullUserProfile = _serviceFactory.Account.GetById(httpUser.GetUserId());
+                    if (fullUserProfile == null)
                     {
-                        fullUserProfile = new UserProfile();
-                        fullUserProfile.Language =  Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages.First():"en-US";
+                        HttpContext.GetOwinContext().Authentication.SignOut();
+                        var fullUserProfile2 = new ApplicationUser();
+                        fullUserProfile2.Language = Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages.First() : "en-US";
+                        return fullUserProfile2;
                     }
                     return fullUserProfile;
                 }
-            }
+                else
+                {
+                    var fullUserProfile = new ApplicationUser();
+                    fullUserProfile.Language =  Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages.First():"en-US";
+                    return fullUserProfile;
+                }
+             }
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -152,10 +157,13 @@ namespace WorkoutPlanner.Controllers.Base
         
         protected override void OnException(ExceptionContext filterContext)
         {
-            if (filterContext.Exception is DataNotFoundException)
+            if (!System.Web.HttpContext.Current.IsDebuggingEnabled)
             {
-                filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction("NoAccess", "Error");
+                if (filterContext.Exception is DataNotFoundException)
+                {
+                    filterContext.ExceptionHandled = true;
+                    filterContext.Result = RedirectToAction("NoAccess", "Error");
+                }
             }
             base.OnException(filterContext);
         }

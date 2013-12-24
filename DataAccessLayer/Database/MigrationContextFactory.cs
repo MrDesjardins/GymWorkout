@@ -9,7 +9,7 @@ namespace DataAccessLayer.Database
 
         public DatabaseContext Create()
         {
-            return new DatabaseContext(new WebUserProvider());
+            return new DatabaseContext();
         }
 
         #endregion

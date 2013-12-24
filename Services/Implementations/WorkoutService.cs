@@ -6,6 +6,7 @@ using BusinessLogic.Validations;
 using DataAccessLayer.Repositories.Base;
 using Mappers.Factory;
 using Model;
+using Model.Definitions;
 using Services.Base;
 using Services.Definitions;
 using WorkoutPlanner.Validations;
@@ -14,7 +15,8 @@ namespace Services.Implementations
 {
     public class WorkoutService : BaseService, IWorkoutService
     {
-        public WorkoutService(IRepositoryFactory repositoryFactory, IMapperFactory mapperFactory) : base(repositoryFactory, mapperFactory)
+        public WorkoutService(IRepositoryFactory repositoryFactory, IMapperFactory mapperFactory, ICurrentUser user)
+            : base(repositoryFactory, mapperFactory,user)
         {
         }
 
@@ -22,8 +24,9 @@ namespace Services.Implementations
 
         public IEnumerable<Workout> GetAll()
         {
-            var listModel = Repository.Workout.GetAll().ToList();
-            return listModel;
+            var listModel = Repository.Workout.GetAll();
+            var toList = listModel.ToList();
+            return toList;
         }
 
         public Workout New()

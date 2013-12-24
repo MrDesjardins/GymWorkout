@@ -1,12 +1,14 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using DataAccessLayer.Database;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Model;
 using Model.Complex;
-using WebMatrix.WebData;
 using Roles = System.Web.Security.Roles;
 using WorkoutPlanner.Database;
 using System.Data.Entity.Migrations;
-
+using Microsoft.Owin.Security;
 namespace WorkoutPlanner.Migrations
 {
     using System;
@@ -24,29 +26,18 @@ namespace WorkoutPlanner.Migrations
         {
             base.Seed(context);
 
+            var userStore = new UserStore<ApplicationUser>();
+            var manager = new UserManager<ApplicationUser>(userStore);
 
-            WebSecurity.InitializeDatabaseConnection(
-            "DefaultConnection",
-            "UserProfile",
-            "UserId",
-            "UserName", autoCreateTables: true);
+            var role = new IdentityUserRole { Role = new IdentityRole(Model.Roles.ADMINISTRATOR) };
+            var user = new ApplicationUser() { UserName = "123123", Email = "123123@123.com", Language = "en-US"};
+            user.Roles.Add(role);
+            IdentityResult result = manager.Create(user, "123123");
 
-            if (!Roles.RoleExists(Model.Roles.ADMINISTRATOR))
-                Roles.CreateRole(Model.Roles.ADMINISTRATOR);
-
-            if (!Roles.RoleExists(Model.Roles.NORMAL))
-                Roles.CreateRole(Model.Roles.NORMAL);
-
-            if (!WebSecurity.UserExists("123123"))
-                WebSecurity.CreateUserAndAccount("123123", "123123", new { Email="123123@123.com", Language="fr-CA"});
-            if (!WebSecurity.UserExists("qweqwe"))
-                WebSecurity.CreateUserAndAccount("qweqwe", "qweqwe", new { Email = "qweqwe@qwe.com", Language = "en-US" });
-
-            if (!((IList<string>)Roles.GetRolesForUser("123123")).Contains(Model.Roles.ADMINISTRATOR))
-                Roles.AddUsersToRoles(new[] { "123123", "qweqwe" }, new[] { Model.Roles.ADMINISTRATOR });
-            if (!((IList<string>)Roles.GetRolesForUser("qweqwe")).Contains(Model.Roles.NORMAL))
-                Roles.AddUsersToRoles(new[] { "qweqwe" }, new[] { Model.Roles.NORMAL });
-
+            var role2 = new IdentityUserRole { Role = new IdentityRole(Model.Roles.NORMAL) };
+            var user2 = new ApplicationUser() { UserName = "qweqwe", Email = "qweqwe@qweqwe.com", Language = "fr-CA" };
+            user.Roles.Add(role2);
+            IdentityResult result2 = manager.Create(user2, "qweqwe");
 
             context.Database.Initialize(true);
 
@@ -71,7 +62,7 @@ namespace WorkoutPlanner.Migrations
             context.Set<Exercise>().AddOrUpdate(new Exercise { Id = 3, Name = new LocalizedString { French = "Redressement assi", English = "Setup" }, Muscle = muscles.Single(d => d.Id == 6) });
             context.Set<Exercise>().AddOrUpdate(new Exercise { Id = 4, Name = new LocalizedString { French = "Bike", English = "Vélo stationnaire" }, Muscle = muscles.Single(d => d.Id == 8) });
 
-            using (var db = context.Impersonate(new UserProfile { UserId = 1 }))
+            using (var db = context.Impersonate(new ApplicationUser() { UserId = "1"}))
             {
                 var workout1 = new Workout { Id = 1, Name = "My First workout user1", StartTime = DateTime.Now.Add(TimeSpan.FromDays(-10)), Goal = "Increase body mass" };
                 var workout2 = new Workout { Id = 2, Name = "My Second workout user1", StartTime = DateTime.Now, Goal = "Increase chest muscle, lower fat around abs" };
@@ -87,7 +78,7 @@ namespace WorkoutPlanner.Migrations
                 db.SetOwnable<WorkoutSession>().AddOrUpdate(new WorkoutSession { Id = 8, Name = "Day2", Workout = workout2, });
 
             }
-            using (var db = context.Impersonate(new UserProfile { UserId = 2 }))
+            using (var db = context.Impersonate(new ApplicationUser { UserId = "2" }))
             {
                 var workout3 = new Workout { Id = 3, Name = "My First workout user2", StartTime = DateTime.Now.Add(TimeSpan.FromDays(-10)), Goal = "Increase body mass" };
                 var workout4 = new Workout { Id = 4, Name = "My Second workout user2", StartTime = DateTime.Now, Goal = "Increase chest muscle, lower fat around abs" };

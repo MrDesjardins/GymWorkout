@@ -18,7 +18,7 @@ namespace Mappers.Factory
         ModelViewModelMapper<WorkoutSession, WorkoutSessionViewModel> WorkoutSession { get; }
         ModelViewModelMapper<WorkoutSessionExercise, WorkoutSessionExerciseViewModel> WorkoutSessionExercise { get; }
         ModelViewModelMapper<Exercise, ExerciseViewModel> Exercise { get; }
-        ModelViewModelMapper<UserProfile, UserProfileViewModel> UserProfile { get; }
+        ModelViewModelMapper<ApplicationUser, UserProfileViewModel> UserProfile { get; }
         IUserSessionDTOMapper UserSessionDTO { get; }
         ModelViewModelMapper<Muscle, MuscleViewModel> Muscle { get; }
 

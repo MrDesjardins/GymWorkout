@@ -11,10 +11,11 @@ using WorkoutPlanner.Controllers.Base;
 
 namespace WorkoutPlanner.Controllers
 {
-    public class UserProfileController : BaseController<UserProfile, UserProfileViewModel>
+    /*
+    public class UserProfileController : BaseController<ApplicationUser, UserProfileViewModel>
     {
         //
-        // GET: /UserProfile/
+        // GET: /ApplicationUser/
 
         public UserProfileController(IServiceFactory serviceFactory
                                 , IMapperFactory mapperFactory
@@ -27,8 +28,8 @@ namespace WorkoutPlanner.Controllers
 
         public ActionResult Edit()
         {
-            var m = ServiceFactory.Account.Get(new UserProfile() { UserId = CurrentUser.UserId });
-            var vm = MapperFactory.UserProfile.GetViewModel(m);
+            var m = ServiceFactory.Account.Get(new ApplicationUser() { UserId = CurrentUser.UserId });
+            var vm = MapperFactory.ApplicationUser.GetViewModel(m);
             vm.Languages = new List<LanguageSelector> { new LanguageSelector("fr-CA", "Français"), new LanguageSelector("en-US", "English") };
             foreach (var lang in vm.Languages)
             {
@@ -53,4 +54,5 @@ namespace WorkoutPlanner.Controllers
         }
 
     }
+     * */
 }

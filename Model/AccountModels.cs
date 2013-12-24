@@ -1,6 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Model.Definitions;
+using ViewModels.Selectors.Base;
+using ViewModels.Selectors.Implementations;
 
 namespace Model
 {
@@ -10,37 +13,14 @@ namespace Model
         public const string ADMINISTRATOR = "Administrator";
         public const string NORMAL = "NormalUser";
     }
-
-    [Table("UserProfile")]
-    public class UserProfile : ICurrentUser
-    {
-        public UserProfile()
-        {
-            this.UserName = "Anonymous";
-            this.Language = "en-US";
-        }
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
-
-        public string UserName { get; set; }
-
-        public string Email { get; set; }
-
-        public string Language { get; set; }
-    }
-
-    public class RegisterExternalLoginModel
+    public class ExternalLoginConfirmationViewModel
     {
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
-
-        public string ExternalLoginData { get; set; }
     }
 
-    public class LocalPasswordModel
+    public class ManageUserViewModel
     {
         [Required]
         [DataType(DataType.Password)]
@@ -59,7 +39,7 @@ namespace Model
         public string ConfirmPassword { get; set; }
     }
 
-    public class LoginModel
+    public class LoginViewModel
     {
         [Required]
         [Display(Name = "User name")]
@@ -74,7 +54,7 @@ namespace Model
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterModel
+    public class RegisterViewModel
     {
         [Required]
         [Display(Name = "User name")]
@@ -91,16 +71,17 @@ namespace Model
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email")]
+        public string Language { get; set; }
         public string Email { get; set; }
-    }
-
-    public class ExternalLogin
-    {
-        public string Provider { get; set; }
-        public string ProviderDisplayName { get; set; }
-        public string ProviderUserId { get; set; }
+        public IEnumerable<ISelector> ListPossibleLanguage {
+            get
+            {
+                return new List<LanguageSelector>
+                {
+                    new LanguageSelector {DisplayText = "Francais", IsSelected = false, Value = "fr-CA"},
+                    new LanguageSelector {DisplayText = "English", IsSelected = true, Value = "en-CA"}
+                };
+            }
+        }
     }
 }

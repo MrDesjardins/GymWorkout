@@ -12,7 +12,7 @@ namespace DataAccessLayer.Database
         IDbSet<TEntity> SetOwnable<TEntity>() where TEntity : class, IUserOwnable;
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
         DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
-        void InitializeDatabase();
+        ICurrentUser CurrentUser { get; set; }
         UserProfileImpersonate Impersonate(ICurrentUser userProfile);
         DbChangeTracker ChangeTracker { get; }
         void Delete<TEntity>(TEntity entity) where TEntity : class, IEntity;

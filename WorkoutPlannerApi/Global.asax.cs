@@ -31,7 +31,6 @@ namespace WorkoutPlannerApi
 
             UnityConfiguration.Initialize();
             MapperConfiguration.Initialize(UnityConfiguration.Container.Resolve<IMapperFactory>());
-            UnityConfiguration.Container.Resolve<IDatabaseContext>().InitializeDatabase();
             GlobalConfiguration.Configuration.DependencyResolver = new IoCContainer(UnityConfiguration.Container);
         }
     }

@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using BusinessLogic;
+using DataAccessLayer;
 using Dto;
 using Mappers.Factory;
 using Model;

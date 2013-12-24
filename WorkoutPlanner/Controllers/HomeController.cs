@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using BusinessLogic;
 using BusinessLogic.Sessions;
+using DataAccessLayer;
 using Mappers;
 using Mappers.Factory;
 using Services.Base;
@@ -11,7 +12,10 @@ namespace WorkoutPlanner.Controllers
 {
     public class HomeController : BaseController<NullReferenceException,NullReferenceException>
     {
-        public HomeController(IServiceFactory serviceFactory, IMapperFactory mapperFactory, IUserProvider userProvider, ISessionHandler sessionHandler) : base(serviceFactory, mapperFactory, userProvider, sessionHandler)
+        public HomeController(IServiceFactory serviceFactory
+                            , IMapperFactory mapperFactory
+                            , IUserProvider userProvider
+                            , ISessionHandler sessionHandler) : base(serviceFactory, mapperFactory, userProvider, sessionHandler)
         {
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BusinessLogic;
 using BusinessLogic.Sessions;
+using DataAccessLayer;
 using Dto;
 using MapperService.Factory;
 using Mappers.Factory;

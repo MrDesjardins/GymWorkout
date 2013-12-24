@@ -1,64 +1,64 @@
 ﻿using System;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using DataAccessLayer.Database;
 using DataAccessLayer.Repositories.Base;
 using DataAccessLayer.Repositories.Definitions;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Model;
 
 namespace DataAccessLayer.Repositories.Implementations
 {
-    public class UserProfileRepository : BaseRepository<UserProfile>, IUserProfileRepository
+    
+    public class ApplicationApplicationUserRepository : BaseRepository<ApplicationUser>, IApplicationUserRepository
     {
-        public UserProfileRepository(IDatabaseContext databaseContext) : base(databaseContext)
+        public ApplicationApplicationUserRepository(IDatabaseContext databaseContext) : base(databaseContext)
         {
         }
 
-        #region Implementation of IRepository<UserProfile>
+        #region Implementation of IRepository<ApplicationUser>
 
-        public override IQueryable<UserProfile> GetAll()
-        {
-            return DatabaseContext.Set<UserProfile>().OrderBy(d => d.UserId);
-        }
-
-        public override UserProfile Get(int id)
-        {
-            return DatabaseContext.Set<UserProfile>().Single(c => c.UserId == id);
-        }
-
-        public override int Insert(UserProfile entity)
-        {
-            DatabaseContext.Set<UserProfile>().Add(entity);
-
-            return DatabaseContext.SaveChanges();
-        }
-
-        public override int Update(UserProfile entity)
-        {
-            UserProfile fromDatabase = Get(entity.UserId);
-            DatabaseContext.Entry(fromDatabase).CurrentValues.SetValues(entity);
-            DatabaseContext.Entry(fromDatabase).State = System.Data.Entity.EntityState.Modified;
-            return DatabaseContext.SaveChanges();
-        }
-
-
-        public override int Delete(UserProfile entity)
-        {
-            DatabaseContext.Set<UserProfile>().Remove(entity);
-            return DatabaseContext.SaveChanges();
-        }
-
-        public override IQueryable<UserProfile> GetAllFromDatabase()
+        public override IQueryable<ApplicationUser> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public UserProfile GetByUserName(string toLower)
+        public override ApplicationUser Get(int id)
         {
-            return DatabaseContext.Set<UserProfile>().SingleOrDefault(d => d.UserName.ToLower() == toLower);
+            throw new System.NotImplementedException();
         }
+
+        public override int Insert(ApplicationUser entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override int Update(ApplicationUser entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+
+        public override int Delete(ApplicationUser entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override IQueryable<ApplicationUser> GetAllFromDatabase()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public UserStore<ApplicationUser> GetUserStore()
+        {
+            var db = base.DatabaseContext as DbContext;
+            return new UserStore<ApplicationUser>(db);
+        }
+
 
         #endregion
     }
+     
 }

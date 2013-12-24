@@ -1,4 +1,4 @@
-﻿namespace BusinessLogic
+﻿namespace DataAccessLayer
 {
     public interface IUserProvider
     {

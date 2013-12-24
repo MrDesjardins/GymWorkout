@@ -11,20 +11,20 @@ namespace DataAccessLayer.Database
     {
         private readonly DatabaseContext _databaseContext;
 
-        private readonly IUserProvider _oldUserProvider;
+        private readonly ICurrentUser _oldUserProvider;
 
         #region Implementation of IDisposable
 
         public UserProfileImpersonate(DatabaseContext dbContext, ICurrentUser userProfile)
         {
             _databaseContext = dbContext;
-            _oldUserProvider = dbContext.UserProvider;
-            _databaseContext.UserProvider = new ImpersonateUserProvider(userProfile);
+            _oldUserProvider = dbContext.CurrentUser;
+            _databaseContext.CurrentUser = new ImpersonateUserProvider(userProfile);
         }
 
         public void Dispose()
         {
-            _databaseContext.UserProvider = _oldUserProvider;
+            _databaseContext.CurrentUser = _oldUserProvider;
         }
 
         #endregion
@@ -51,10 +51,9 @@ namespace DataAccessLayer.Database
             return _databaseContext.Entry(entity);
         }
 
-        public void InitializeDatabase()
-        {
-            _databaseContext.InitializeDatabase();
-        }
+        public ICurrentUser CurrentUser {
+            get { return _databaseContext.CurrentUser; }
+            set { _databaseContext.CurrentUser = value; }}
 
         public UserProfileImpersonate Impersonate(ICurrentUser userProfile)
         {

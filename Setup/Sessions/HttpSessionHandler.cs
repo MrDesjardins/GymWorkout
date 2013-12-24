@@ -1,5 +1,6 @@
 using System.Web;
 using BusinessLogic.Sessions;
+using Microsoft.AspNet.Identity;
 
 namespace Setup.Sessions
 {
@@ -16,6 +17,7 @@ namespace Setup.Sessions
 
         public UserSessionDTO GetUser()
         {
+            var s = HttpContext.Current.User.Identity.GetUserName();
             return (UserSessionDTO)HttpContext.Current.Session["user"];
         }
 

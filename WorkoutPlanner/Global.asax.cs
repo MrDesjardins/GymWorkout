@@ -30,12 +30,9 @@ namespace WorkoutPlanner
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AuthConfig.RegisterAuth();
             
             UnityConfiguration.Initialize();
             MapperConfiguration.Initialize(UnityConfiguration.Container.Resolve<IMapperFactory>());
-
-            UnityConfiguration.Container.Resolve<IDatabaseContext>().InitializeDatabase();
             GlobalConfiguration.Configuration.DependencyResolver = new IoCContainer(UnityConfiguration.Container);
    }
 
@@ -54,21 +51,22 @@ namespace WorkoutPlanner
             var contextWrapper = new HttpContextWrapper(this.Context);
             context.Response.SuppressFormsAuthenticationRedirect = true;
 
-
-            var statusCode = Context.Response.StatusCode;
-            if (statusCode == 404 || statusCode == 500)
+            if (!System.Web.HttpContext.Current.IsDebuggingEnabled)
             {
-                Response.Clear();
+                var statusCode = Context.Response.StatusCode;
+                if (statusCode == 404 || statusCode == 500)
+                {
+                    Response.Clear();
 
-                var routingData = new RouteData();
-                //rd.DataTokens["area"] = "AreaName"; // In case controller is in another area
-                routingData.Values["controller"] = "Error";
-                routingData.Values["action"] = "NotFound";
-                IController c = new ErrorController();
-              
-                c.Execute(new RequestContext(new HttpContextWrapper(Context), routingData));
+                    var routingData = new RouteData();
+                    //rd.DataTokens["area"] = "AreaName"; // In case controller is in another area
+                    routingData.Values["controller"] = "Error";
+                    routingData.Values["action"] = "NotFound";
+                    IController c = new ErrorController();
+
+                    c.Execute(new RequestContext(new HttpContextWrapper(Context), routingData));
+                }
             }
-            
         }
 
     }

@@ -30,7 +30,7 @@ namespace Mappers.Factory
         private ModelViewModelMapper<WorkoutSessionExercise, WorkoutSessionExerciseViewModel> _workoutSessionExercise;
         private ModelViewModelMapper<Exercise, ExerciseViewModel> _exercise;
         private UserSessionDTOMapper _userSessionDTO;
-        private ModelViewModelMapper<UserProfile, UserProfileViewModel> _userProfile; 
+        private ModelViewModelMapper<ApplicationUser, UserProfileViewModel> _userProfile; 
         private ModelViewModelMapper<Muscle, MuscleViewModel> _muscle; 
 
  
@@ -59,7 +59,7 @@ namespace Mappers.Factory
             get { return _userSessionDTO ?? (_userSessionDTO = new UserSessionDTOMapper()); }
         }
 
-        public ModelViewModelMapper<UserProfile, UserProfileViewModel> UserProfile
+        public ModelViewModelMapper<ApplicationUser, UserProfileViewModel> UserProfile
         {
             get { return _userProfile ?? (_userProfile = new UserProfileMapper()); }
         }
@@ -104,8 +104,7 @@ namespace Mappers.Factory
             this.MapperProfiles.Add(new ConcreteMapper(typeof(WorkoutSession),typeof(WorkoutSessionViewModel),this.WorkoutSession));
             this.MapperProfiles.Add(new ConcreteMapper(typeof(WorkoutSessionExercise),typeof(WorkoutSessionExerciseViewModel),this.WorkoutSessionExercise));
             this.MapperProfiles.Add(new ConcreteMapper(typeof(Exercise),typeof(ExerciseViewModel),this.Exercise));
-            this.MapperProfiles.Add(new ConcreteMapper(typeof(UserProfile), typeof(UserSessionDTO), this.UserSessionDTO));
-            this.MapperProfiles.Add(new ConcreteMapper(typeof(UserProfile), typeof(UserProfileViewModel), this.UserProfile));
+        
             this.MapperProfiles.Add(new ConcreteMapper(typeof(Muscle), typeof(MuscleViewModel), this.Muscle));
         }
     }

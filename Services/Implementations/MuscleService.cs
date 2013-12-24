@@ -7,6 +7,7 @@ using DataAccessLayer.Repositories.Base;
 using Mappers;
 using Mappers.Factory;
 using Model;
+using Model.Definitions;
 using Services.Base;
 using Services.Definitions;
 using ViewModels.Selectors.Implementations;
@@ -16,8 +17,8 @@ namespace Services.Implementations
 {
     public class MuscleService : BaseService, IMuscleService
     {
-        public MuscleService(IRepositoryFactory repositoryFactory, IMapperFactory mapperFactory)
-            : base(repositoryFactory, mapperFactory)
+        public MuscleService(IRepositoryFactory repositoryFactory, IMapperFactory mapperFactory, ICurrentUser user)
+            : base(repositoryFactory, mapperFactory, user)
         {
         }
 

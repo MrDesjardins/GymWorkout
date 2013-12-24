@@ -2,13 +2,14 @@
 using DataAccessLayer.Repositories.Base;
 using DataAccessLayer.Repositories.Definitions;
 using DataAccessLayer.Repositories.Implementations;
+using Model.Definitions;
 
 namespace DataAccessLayer.Repositories
 {
     public class RepositoryFactory:IRepositoryFactory
     {
         private readonly IDatabaseContext _databaseContext;
-        private IUserProfileRepository _userProfileRepository;
+        private IApplicationUserRepository _applicationUserRepository;
         private IWorkoutRepository _workoutRepository;
         private IWorkoutSessionRepository _workoutSessionRepository;
         private IWorkoutSessionExerciseRepository _workoutSessionExerciseRepository;
@@ -18,13 +19,15 @@ namespace DataAccessLayer.Repositories
         public RepositoryFactory(IDatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
+            
         }
 
         #region Implementation of IRespositoryFactory
 
-        public IUserProfileRepository UserProfile
+        
+        public IApplicationUserRepository ApplicationUser
         {
-            get { return _userProfileRepository ?? (_userProfileRepository = new UserProfileRepository(_databaseContext)); }
+            get { return _applicationUserRepository ?? (_applicationUserRepository = new ApplicationApplicationUserRepository(_databaseContext)); }
         }
 
         public IWorkoutRepository Workout
@@ -50,6 +53,11 @@ namespace DataAccessLayer.Repositories
         public IMuscleRepository Muscle
         {
             get { return _muscleRepository ?? (_muscleRepository = new MuscleRepository(_databaseContext)); }
+        }
+
+        public void SetUser(ICurrentUser user)
+        {
+            _databaseContext.CurrentUser = user;
         }
 
         public void Save()

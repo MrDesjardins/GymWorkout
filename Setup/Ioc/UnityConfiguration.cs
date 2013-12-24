@@ -1,6 +1,8 @@
+using System;
 using System.Web.Mvc;
 using BusinessLogic;
 using BusinessLogic.Sessions;
+using DataAccessLayer;
 using DataAccessLayer.Database;
 using DataAccessLayer.Repositories;
 using DataAccessLayer.Repositories.Base;
@@ -26,9 +28,8 @@ namespace Setup.Ioc
         public static void Initialize()
         {
             Container = new UnityContainer()
-                .RegisterType<ICurrentUser, UserProfile>()
-                .RegisterType<IUserProvider, WebUserProvider>()
                 .RegisterType<ISessionHandler, HttpSessionHandler>()
+                .RegisterType<IUserProvider, WebUserProvider>()
                 .RegisterType<IDatabaseContext, DatabaseContext>()
                 .RegisterType<IRepositoryFactory, RepositoryFactory>()
                 .RegisterType<IServiceFactory, ServiceFactory>()
@@ -49,7 +50,7 @@ namespace Setup.Ioc
         private static void InitializeServices()
         {
               Container
-                 .RegisterType<IAccountService, AccountService>()
+                 .RegisterType<IAccountService, ApplicationUserService>()
                  .RegisterType<IWorkoutService, WorkoutService>()
                  .RegisterType<IWorkoutSessionService, WorkoutSessionService>()
                  .RegisterType<IWorkoutSessionExerciseService, WorkoutSessionExerciseService>()
@@ -61,7 +62,7 @@ namespace Setup.Ioc
         private static void InitializeRepositories()
         {
             Container
-                .RegisterType<IUserProfileRepository, UserProfileRepository>()
+                .RegisterType<IApplicationUserRepository, ApplicationApplicationUserRepository>()
                 .RegisterType<IWorkoutRepository, WorkoutRepository>()
                 .RegisterType<IWorkoutSessionRepository, WorkoutSessionRepository>()
                 .RegisterType<IWorkoutSessionExerciseRepository, WorkoutSessionExerciseRepository>()

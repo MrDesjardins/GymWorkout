@@ -6,17 +6,19 @@ using ViewModels;
 
 namespace Mappers.Implementations
 {
-    public class UserProfileMapper: ModelViewModelMapper<UserProfile, UserProfileViewModel>
+
+    public class UserProfileMapper : ModelViewModelMapper<ApplicationUser, UserProfileViewModel>
     {
 
 
         protected override void Configure()
         {
             base.Configure();
-            Mapper.CreateMap<UserProfile, UserProfileViewModel>()
+            Mapper.CreateMap<ApplicationUser, UserProfileViewModel>()
                 ;
-            Mapper.CreateMap<UserProfileViewModel, UserProfile>()
+            Mapper.CreateMap<UserProfileViewModel, ApplicationUser>()
             ;
         }
     }
+     
 }

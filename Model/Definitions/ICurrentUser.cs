@@ -1,8 +1,10 @@
-﻿namespace Model.Definitions
+﻿using System;
+
+namespace Model.Definitions
 {
     public interface ICurrentUser
     {
-        int UserId { get; set; }
+        string UserId { get; set; }
         string UserName { get; set; }
         string Email { get; set; }
         string Language { get; set; }

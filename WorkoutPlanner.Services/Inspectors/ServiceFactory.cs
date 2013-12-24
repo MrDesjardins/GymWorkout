@@ -9,6 +9,7 @@ using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
 using BusinessLogic;
+using DataAccessLayer;
 using DataAccessLayer.Database;
 using MapperService.Factory;
 using Mappers.Base;
@@ -33,7 +34,6 @@ namespace WorkoutPlanner.Services.Inspectors
             UnityConfiguration.Container.RegisterType<MapperService.Factory.IMapperFactory, MapperService.Factory.MapperFactory>();
             UnityConfiguration.Container.RegisterType<IUserProvider, WebServiceUserProvider>();
             MapperService.Base.MapperConfiguration.Initialize(UnityConfiguration.Container.Resolve<MapperService.Factory.IMapperFactory>());
-            UnityConfiguration.Container.Resolve<IDatabaseContext>().InitializeDatabase();
 
             serviceHost.Container = UnityConfiguration.Container;
             return serviceHost;

@@ -1,3 +1,4 @@
+using Model.Definitions;
 using Services.Definitions;
 
 namespace Services.Base

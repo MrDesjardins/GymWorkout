@@ -9,6 +9,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Security;
 using BusinessLogic;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Model;
 using Model.Complex;
 using Model.Definitions;
@@ -22,10 +23,8 @@ namespace DataAccessLayer.Database
     public class DatabaseContext : DbContext, IDatabaseContext
     {
         public const string DEFAULTCONNECTION = "DefaultConnection";
-        public DatabaseContext(IUserProvider userProvider)
+        public DatabaseContext()
         {
-            UserProvider = userProvider;
-
             base.Database.Connection.ConnectionString = ConfigurationManager.ConnectionStrings[DEFAULTCONNECTION].ConnectionString;
             Configuration.ProxyCreationEnabled = false;
             Configuration.AutoDetectChangesEnabled = false;
@@ -33,12 +32,8 @@ namespace DataAccessLayer.Database
             Configuration.ValidateOnSaveEnabled = true;
         }
 
-        public IUserProvider UserProvider { get; set; }
+        public Model.Definitions.ICurrentUser CurrentUser { get; set; }
 
-        public ICurrentUser CurrentUser
-        {
-            get { return UserProvider.Account; }
-        }
 
         #region Implementation of IDatabaseContext
 
@@ -185,15 +180,6 @@ namespace DataAccessLayer.Database
             return new FilteredDbSet<TEntity>(this, entity => entity.UserId == CurrentUser.UserId, entity => entity.UserId = CurrentUser.UserId);
         }
 
-        public void InitializeDatabase()
-        {
-            WebSecurity.InitializeDatabaseConnection(DEFAULTCONNECTION, "UserProfile", "UserId", "UserName", autoCreateTables: true);
-        }/*
-        public DbEntityEntry<TEntity> ChangeTracker<TEntity>(TEntity entity) where TEntity : class
-        {
-             return base.ChangeTracker.Entries<TEntity>().Single(p => p.Entity == entity);
-        }*/
-
         public override int SaveChanges()
         {
             IEnumerable<DbEntityValidationResult> errors = new List<DbEntityValidationResult>();
@@ -254,8 +240,12 @@ namespace DataAccessLayer.Database
             modelBuilder.Configurations.Add(new ExerciseConfiguration());
             modelBuilder.Configurations.Add(new MuscleConfiguration());
             modelBuilder.Configurations.Add(new MuscleGroupConfiguration());
-            modelBuilder.Configurations.Add(new UserProfileConfiguration());
-            
+            modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
+
+            modelBuilder.Entity<IdentityUserLogin>().HasKey(l => l.UserId);
+            modelBuilder.Entity<IdentityRole>().HasKey(r => r.Id);
+            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
+           
         }
 
         public UserProfileImpersonate Impersonate(ICurrentUser userProfile)
@@ -269,14 +259,6 @@ namespace DataAccessLayer.Database
         }
     }
 
-    public class UserProfileConfiguration : EntityTypeConfiguration<UserProfile>
-    {
-        public UserProfileConfiguration()
-        {
-            this.Property(d => d.Email).HasColumnName("Email");
-            this.Property(d => d.UserName).HasColumnName("UserName");
-        }
-    }
 
 
     public class WorkoutConfiguration : EntityTypeConfiguration<Workout>
@@ -333,5 +315,14 @@ namespace DataAccessLayer.Database
 
     public class MuscleGroupConfiguration : EntityTypeConfiguration<MuscleGroup>
     {
+    }
+
+    public class ApplicationUserConfiguration : EntityTypeConfiguration<ApplicationUser>
+    {
+        public ApplicationUserConfiguration()
+        {
+            this.HasKey(d => d.Id);
+            this.Ignore(d => d.UserId);
+        }
     }
 }

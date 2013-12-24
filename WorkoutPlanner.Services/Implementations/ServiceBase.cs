@@ -1,4 +1,5 @@
 ﻿using BusinessLogic;
+using DataAccessLayer;
 using Mappers.Factory;
 using Model;
 using Model.Definitions;
@@ -42,13 +43,14 @@ namespace WorkoutPlanner.Services.Implementations
             get
             {
                 //[P] : This won't be like that for WCF Service
+                /*
 
                 ICurrentUser currentUserFromProvider = _userProvider.Account;
-                UserProfile fullUserProfile = _serviceFactory.Account.GetByUserName(currentUserFromProvider.UserName);
+                ApplicationUser fullUserProfile = _serviceFactory.Account.GetByUserName(currentUserFromProvider.UserName);
                 if (fullUserProfile == null)//Case of a non identified user
-                    fullUserProfile = new UserProfile();
-                return fullUserProfile;
-                
+                    fullUserProfile = new ApplicationUser();
+                return fullUserProfile;*/
+                return null;
             }
         }
     }

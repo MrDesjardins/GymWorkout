@@ -10,7 +10,7 @@ namespace Mappers.Definitions
     /// </summary>
     public interface IUserSessionDTOMapper : IMapper
     {
-        UserSessionDTO GetDTO(UserProfile session);
-        UserProfile GetModel(UserSessionDTO model);
+        UserSessionDTO GetDTO(ApplicationUser session);
+        ApplicationUser GetModel(UserSessionDTO model);
     }
 }

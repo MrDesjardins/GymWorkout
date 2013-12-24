@@ -6,6 +6,7 @@ using DataAccessLayer.Repositories.Base;
 using Mappers;
 using Mappers.Factory;
 using Model;
+using Model.Definitions;
 using Services.Base;
 using Services.Definitions;
 using ViewModels;
@@ -19,8 +20,9 @@ namespace Services.Implementations
 
         public ExerciseService(IRepositoryFactory repositoryFactory
                              , IMapperFactory mapperFactory
-                             , IMuscleService muscleService)
-            : base(repositoryFactory, mapperFactory)
+                             , IMuscleService muscleService
+                             , ICurrentUser user)
+            : base(repositoryFactory, mapperFactory, user)
         {
             _muscleService = muscleService;
         }

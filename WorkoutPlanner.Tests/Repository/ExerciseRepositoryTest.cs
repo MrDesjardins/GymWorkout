@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using BusinessLogic;
+using DataAccessLayer;
 using DataAccessLayer.Database;
 using DataAccessLayer.Repositories.Definitions;
 using DataAccessLayer.Repositories.Implementations;
@@ -28,9 +29,12 @@ namespace WorkoutPlanner.Tests.Repository
         public ExerciseRepositoryTest()
         {
             _userProvider = new Mock<IUserProvider>(MockBehavior.Strict);
-            _userProvider.Setup(d => d.Account).Returns(new UserProfile { UserId = 1 });
-            _repository = new ExerciseRepository(new DatabaseContext(_userProvider.Object));
-            _repositoryValidation = new ExerciseRepository(new DatabaseContext(_userProvider.Object));
+            _userProvider.Setup(d => d.Account).Returns(new ApplicationUser { UserId = "1" });
+            var db = new DatabaseContext();
+            db.CurrentUser = _userProvider.Object.Account;
+            _repository = new ExerciseRepository(db);
+            _repositoryValidation = new ExerciseRepository(db);
+            
         }
 
         [TestInitialize]

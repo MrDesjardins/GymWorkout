@@ -5,7 +5,7 @@
 }
 <h3>Change language</h3>
 
-@using (Html.BeginForm("Edit", "UserProfile")) {
+@using (Html.BeginForm("Edit", "ApplicationUser")) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
 

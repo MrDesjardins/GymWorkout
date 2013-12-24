@@ -7,9 +7,9 @@ using System.Web.Mvc;
 using BusinessLogic;
 using BusinessLogic.Sessions;
 using BusinessLogic.Validations;
+using DataAccessLayer;
 using Mappers;
 using Mappers.Base;
-using Mappers.Definitions;
 using Mappers.Factory;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -44,13 +44,13 @@ namespace WorkoutPlanner.Tests.Controllers
         public void Initialize()
         {
             //Create mock
-            var userDTO = new UserSessionDTO {UserId = 1};
-            var userProfile = new UserProfile {UserId = 1};
+            var userDTO = new UserSessionDTO {UserId = "1"};
+            var userProfile = new ApplicationUser{UserId = "1"};
             
             _serviceFactoryMock = new Mock<IServiceFactory>();
             var userProviderMock = new Mock<IUserProvider>();
             var sessionHandlerMock = new Mock<ISessionHandler>();
-            var userSessionDTOMapperMock = new Mock<IUserSessionDTOMapper>();
+            //var userSessionDTOMapperMock = new Mock<IUserSessionDTOMapper>();
             
             _exerciseService = new Mock<IExerciseService>();
             _muscleService = new Mock<IMuscleService>();
@@ -58,7 +58,7 @@ namespace WorkoutPlanner.Tests.Controllers
             //Initialize mock
             userProviderMock.Setup(d => d.Account).Returns(userProfile);
             sessionHandlerMock.Setup(d => d.GetUser()).Returns(userDTO);
-            userSessionDTOMapperMock.Setup(d => d.GetModel(userDTO)).Returns(userProfile);
+            //userSessionDTOMapperMock.Setup(d => d.GetModel(userDTO)).Returns(userProfile);
             _serviceFactoryMock.Setup(d => d.Exercise).Returns(_exerciseService.Object);
             _serviceFactoryMock.Setup(d => d.Muscle).Returns(_muscleService.Object);
 
@@ -66,7 +66,7 @@ namespace WorkoutPlanner.Tests.Controllers
             UnityConfiguration.Container.RegisterInstance(_serviceFactoryMock.Object);
             UnityConfiguration.Container.RegisterInstance(userProviderMock.Object);
             UnityConfiguration.Container.RegisterInstance(sessionHandlerMock);
-            UnityConfiguration.Container.RegisterInstance(userSessionDTOMapperMock.Object);
+            //UnityConfiguration.Container.RegisterInstance(userSessionDTOMapperMock.Object);
 
             MapperConfiguration.Initialize(UnityConfiguration.Container.Resolve<IMapperFactory>());
             _controller = UnityConfiguration.Container.Resolve<ExerciseController>();

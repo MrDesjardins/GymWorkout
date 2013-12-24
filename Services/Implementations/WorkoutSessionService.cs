@@ -6,6 +6,7 @@ using DataAccessLayer.Repositories.Base;
 using Mappers;
 using Mappers.Factory;
 using Model;
+using Model.Definitions;
 using Services.Base;
 using Services.Definitions;
 using ViewModels;
@@ -14,8 +15,8 @@ namespace Services.Implementations
 {
     public class WorkoutSessionService : BaseService, IWorkoutSessionService
     {
-        public WorkoutSessionService(IRepositoryFactory repositoryFactory, IMapperFactory mapperFactory)
-            : base(repositoryFactory, mapperFactory)
+        public WorkoutSessionService(IRepositoryFactory repositoryFactory, IMapperFactory mapperFactory, ICurrentUser user)
+            : base(repositoryFactory, mapperFactory, user)
         {
         }
 

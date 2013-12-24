@@ -39,6 +39,14 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.1.0.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.1.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -63,13 +71,14 @@
     <Compile Include="Database\MigrationContextFactory.cs" />
     <Compile Include="Database\RemoveValidation.cs" />
     <Compile Include="Database\UserProfileImpersonate.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\BaseRepository.cs" />
     <Compile Include="Repositories\Base\IRepository.cs" />
     <Compile Include="Repositories\Base\IRepositoryFactory.cs" />
     <Compile Include="Repositories\Definitions\IExerciseRepository.cs" />
     <Compile Include="Repositories\Definitions\IMuscleRepository.cs" />
-    <Compile Include="Repositories\Definitions\IUserProfileRepository.cs" />
+    <Compile Include="Repositories\Definitions\IApplicationUserRepository.cs" />
     <Compile Include="Repositories\Definitions\IWorkoutRepository.cs" />
     <Compile Include="Repositories\Definitions\IWorkoutSessionExerciseRepository.cs" />
     <Compile Include="Repositories\Definitions\IWorkoutSessionRepository.cs" />

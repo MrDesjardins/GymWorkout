@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Model.Definitions;
 
 namespace Services.Base
 {
@@ -13,5 +14,7 @@ namespace Services.Base
         int Update(TModel model);
         int Update(TModel model, params Expression<Func<TModel, object>>[] properties);
         int Delete(TModel model);
+
+
     }
 }

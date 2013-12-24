@@ -35,7 +35,7 @@ namespace Model
 
         #region Implementation of IUserOwnable
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         #endregion
     }

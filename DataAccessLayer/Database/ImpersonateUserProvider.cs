@@ -3,23 +3,25 @@ using Model.Definitions;
 
 namespace DataAccessLayer.Database
 {
-    public class ImpersonateUserProvider : IUserProvider
+    public class ImpersonateUserProvider : ICurrentUser
     {
-        private readonly ICurrentUser _currentUser;
+        public ImpersonateUserProvider()
+        {
+            
+        }
 
         public ImpersonateUserProvider(ICurrentUser userProfile)
         {
-            _currentUser = userProfile;
+            UserId = userProfile.UserId;
+            UserName = userProfile.UserName;
+            Email = userProfile.Email;
+            Language = userProfile.Language;
         }
 
-        #region Implementation of IUserProvider
 
-        public ICurrentUser Account
-        {
-            get { return _currentUser; }
-            private set { }
-        }
-
-        #endregion
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string Language { get; set; }
     }
 }

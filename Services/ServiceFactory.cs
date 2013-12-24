@@ -1,6 +1,8 @@
-﻿using DataAccessLayer.Repositories.Base;
+﻿using DataAccessLayer;
+using DataAccessLayer.Repositories.Base;
 using Mappers;
 using Mappers.Factory;
+using Model.Definitions;
 using Services.Base;
 using Services.Definitions;
 using Services.Implementations;
@@ -9,6 +11,7 @@ namespace Services
 {
     public class ServiceFactory : IServiceFactory
     {
+        private IUserProvider _userProvider;
         #region Implementation of IServiceFactory
 
         public IAccountService Account { get; private set; }
@@ -16,18 +19,24 @@ namespace Services
         public IWorkoutService Workout { get; private set; }
         public IWorkoutSessionService WorkoutSession { get; private set; }
         public IWorkoutSessionExerciseService WorkoutSessionExercise { get; private set; }
+
+
         public IExerciseService Exercise { get; private set; }
 
         #endregion
 
-        public ServiceFactory(IRepositoryFactory repositoryFactory, IMapperFactory mapperFactory)
+        public ServiceFactory(IRepositoryFactory repositoryFactory, IMapperFactory mapperFactory, IUserProvider userProvider)
         {
-            Account = new AccountService(repositoryFactory, mapperFactory);
-            Muscle = new MuscleService(repositoryFactory, mapperFactory);
-            Workout = new WorkoutService(repositoryFactory, mapperFactory);
-            WorkoutSession = new WorkoutSessionService(repositoryFactory, mapperFactory);
-            WorkoutSessionExercise = new WorkoutSessionExerciseService(repositoryFactory, mapperFactory);
-            Exercise = new ExerciseService(repositoryFactory, mapperFactory, Muscle);
+            _userProvider = userProvider;
+            var account = _userProvider.Account;
+            Account = new ApplicationUserService(repositoryFactory, mapperFactory);
+            Muscle = new MuscleService(repositoryFactory, mapperFactory, account);
+            Workout = new WorkoutService(repositoryFactory, mapperFactory, account);
+            WorkoutSession = new WorkoutSessionService(repositoryFactory, mapperFactory, account);
+            WorkoutSessionExercise = new WorkoutSessionExerciseService(repositoryFactory, mapperFactory, account);
+            Exercise = new ExerciseService(repositoryFactory, mapperFactory, Muscle, account);
         }
+
+       
     }
 }
