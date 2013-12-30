@@ -22,7 +22,7 @@ namespace WorkoutPlanner.Migrations
     {
         public Configuration()
         {
-            //AutomaticMigrationsEnabled = true;
+            base.AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(DatabaseContext context)
