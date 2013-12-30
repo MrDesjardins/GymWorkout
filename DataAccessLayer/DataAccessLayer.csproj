@@ -67,6 +67,7 @@
     <Compile Include="Database\DatabaseValidationErrors.cs" />
     <Compile Include="Database\FilteredDbSet.cs" />
     <Compile Include="Database\IDatabaseContext.cs" />
+    <Compile Include="Database\IdentityContext.cs" />
     <Compile Include="Database\ImpersonateUserProvider.cs" />
     <Compile Include="Database\MigrationContextFactory.cs" />
     <Compile Include="Database\RemoveValidation.cs" />

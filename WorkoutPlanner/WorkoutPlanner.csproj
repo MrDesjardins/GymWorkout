@@ -267,6 +267,7 @@
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="Extensions\HtmlHelpers.cs" />
     <Compile Include="Globals\Preferences.cs" />
+    <Compile Include="Migrations\ConfigurationIdentity.cs" />
     <Compile Include="Migrations\DbSetExtension.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

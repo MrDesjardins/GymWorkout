@@ -240,11 +240,11 @@ namespace DataAccessLayer.Database
             modelBuilder.Configurations.Add(new ExerciseConfiguration());
             modelBuilder.Configurations.Add(new MuscleConfiguration());
             modelBuilder.Configurations.Add(new MuscleGroupConfiguration());
-            modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
+            //modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
 
-            modelBuilder.Entity<IdentityUserLogin>().HasKey(l => l.UserId);
-            modelBuilder.Entity<IdentityRole>().HasKey(r => r.Id);
-            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
+            //modelBuilder.Entity<IdentityUserLogin>().HasKey(l => l.UserId);
+            //modelBuilder.Entity<IdentityRole>().HasKey(r => r.Id);
+            //modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
            
         }
 
@@ -317,12 +317,5 @@ namespace DataAccessLayer.Database
     {
     }
 
-    public class ApplicationUserConfiguration : EntityTypeConfiguration<ApplicationUser>
-    {
-        public ApplicationUserConfiguration()
-        {
-            this.HasKey(d => d.Id);
-            this.Ignore(d => d.UserId);
-        }
-    }
+   
 }

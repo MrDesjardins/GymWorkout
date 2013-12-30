@@ -53,7 +53,8 @@ namespace DataAccessLayer.Repositories.Implementations
 
         public UserStore<ApplicationUser> GetUserStore()
         {
-            var db = base.DatabaseContext as DbContext;
+            //var db = base.DatabaseContext as DbContext;
+            var db = new IdentityDbContext();
             return new UserStore<ApplicationUser>(db);
         }
 

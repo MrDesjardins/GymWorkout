@@ -25,21 +25,8 @@ namespace WorkoutPlanner.Migrations
         protected override void Seed(DatabaseContext context)
         {
             base.Seed(context);
-
-            var userStore = new UserStore<ApplicationUser>();
-            var manager = new UserManager<ApplicationUser>(userStore);
-
-            var role = new IdentityUserRole { Role = new IdentityRole(Model.Roles.ADMINISTRATOR) };
-            var user = new ApplicationUser() { UserName = "123123", Email = "123123@123.com", Language = "en-US"};
-            user.Roles.Add(role);
-            IdentityResult result = manager.Create(user, "123123");
-
-            var role2 = new IdentityUserRole { Role = new IdentityRole(Model.Roles.NORMAL) };
-            var user2 = new ApplicationUser() { UserName = "qweqwe", Email = "qweqwe@qweqwe.com", Language = "fr-CA" };
-            user.Roles.Add(role2);
-            IdentityResult result2 = manager.Create(user2, "qweqwe");
-
-            context.Database.Initialize(true);
+            //context.Database.Initialize(true);
+     
 
             var muscles = new[]{new Muscle { Id = 1, Name = new LocalizedString { French = "Cou", English = "Neck" } },
                                 new Muscle { Id = 2, Name = new LocalizedString { French = "Épaule", English = "Shoulder" } },
