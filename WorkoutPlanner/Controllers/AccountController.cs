@@ -26,7 +26,7 @@ namespace WorkoutPlanner.Controllers
 {
     [Authorize]
     //[InitializeSimpleMembership]
-    public class AccountController : BaseController<Exercise, ExerciseViewModel>
+    public class AccountController : BaseController
     {
 
         private readonly ISessionHandler _session;
@@ -38,7 +38,6 @@ namespace WorkoutPlanner.Controllers
             _session = sessionHandler;
             _mapperFactory = mapperFactory;
             UserManager = base.ServiceFactory.Account.GetUserManager();
-            //UserManager = new UserManager<ApplicationUser>(base.Repository.ApplicationUser.GetUserStore());
         }
 
         

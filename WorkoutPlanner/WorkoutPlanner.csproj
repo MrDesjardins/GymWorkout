@@ -256,7 +256,6 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExerciseController.cs" />
     <Compile Include="Controllers\MuscleController.cs" />
-    <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Controllers\Api\WorkoutController.cs" />
     <Compile Include="Controllers\WorkoutSessionExerciseController.cs" />
     <Compile Include="Controllers\WorkoutSessionController.cs" />

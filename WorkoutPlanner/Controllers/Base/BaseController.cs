@@ -22,33 +22,31 @@ using Shared;
 using Microsoft.AspNet.Identity;
 namespace WorkoutPlanner.Controllers.Base
 {
-    public abstract class BaseController<TModel, TViewModel> : Controller
+
+    public class BaseController : Controller
     {
-        private readonly IMapperFactory _mapperFactory;
-        private readonly IServiceFactory _serviceFactory;
-        private readonly ISessionHandler _sessionHandler;
-        private readonly IUserProvider _userProvider;
+        protected readonly IMapperFactory _mapperFactory;
+        protected readonly IServiceFactory _serviceFactory;
+        protected readonly ISessionHandler _sessionHandler;
+        protected readonly IUserProvider _userProvider;
 
-
-        protected BaseController(IServiceFactory serviceFactory, IMapperFactory mapperFactory, IUserProvider userProvider, ISessionHandler sessionHandler)
+        protected BaseController(IServiceFactory serviceFactory, IMapperFactory mapperFactory,
+            IUserProvider userProvider, ISessionHandler sessionHandler)
         {
             _serviceFactory = serviceFactory;
             _mapperFactory = mapperFactory;
             _userProvider = userProvider;
             _sessionHandler = sessionHandler;
         }
-
-        protected TModel Model { get; private set; }
-
         protected IServiceFactory ServiceFactory
         {
             get { return _serviceFactory; }
         }
 
-        protected IMapperFactory MapperFactory {
+        protected IMapperFactory MapperFactory
+        {
             get { return _mapperFactory; }
         }
-
         protected ICurrentUser CurrentUser
         {
             get
@@ -69,11 +67,68 @@ namespace WorkoutPlanner.Controllers.Base
                 else
                 {
                     var fullUserProfile = new ApplicationUser();
-                    fullUserProfile.Language =  Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages.First():"en-US";
+                    fullUserProfile.Language = Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages.First() : "en-US";
                     return fullUserProfile;
                 }
-             }
+            }
         }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            if (!System.Web.HttpContext.Current.IsDebuggingEnabled)
+            {
+                if (filterContext.Exception is DataNotFoundException)
+                {
+                    filterContext.ExceptionHandled = true;
+                    filterContext.Result = RedirectToAction("NoAccess", "Error");
+                }
+            }
+            base.OnException(filterContext);
+        }
+
+        protected string RenderPartialView(string partialViewName, object model)
+        {
+            if (ControllerContext == null)
+                return string.Empty;
+
+            if (model == null)
+                throw new ArgumentNullException("model");
+
+            if (string.IsNullOrEmpty(partialViewName))
+                throw new ArgumentNullException("partialViewName");
+
+            ModelState.Clear();//Remove possible model binding error.
+
+            ViewData.Model = model;//Set the model to the partial view
+
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, partialViewName);
+                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                return sw.GetStringBuilder().ToString();
+            }
+        }
+
+
+    }
+
+    public abstract class BaseController<TModel, TViewModel> : BaseController
+    {
+
+
+
+        protected BaseController(IServiceFactory serviceFactory, IMapperFactory mapperFactory, IUserProvider userProvider, ISessionHandler sessionHandler)
+            : base(serviceFactory, mapperFactory, userProvider, sessionHandler)
+        {
+
+        }
+
+        protected TModel Model { get; private set; }
+
+      
+
+       
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -155,18 +210,6 @@ namespace WorkoutPlanner.Controllers.Base
             return Validator.TryValidateObject(entity, context, results, true);
         }
         
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            if (!System.Web.HttpContext.Current.IsDebuggingEnabled)
-            {
-                if (filterContext.Exception is DataNotFoundException)
-                {
-                    filterContext.ExceptionHandled = true;
-                    filterContext.Result = RedirectToAction("NoAccess", "Error");
-                }
-            }
-            base.OnException(filterContext);
-        }
 
 
         private void ApplyOwnership()
@@ -178,29 +221,6 @@ namespace WorkoutPlanner.Controllers.Base
         }
 
 
-        protected string RenderPartialView(string partialViewName, object model)
-        {
-            if (ControllerContext == null)
-                return string.Empty;
-
-            if (model == null)
-                throw new ArgumentNullException("model");
-
-            if (string.IsNullOrEmpty(partialViewName))
-                throw new ArgumentNullException("partialViewName");
-
-            ModelState.Clear();//Remove possible model binding error.
-
-            ViewData.Model = model;//Set the model to the partial view
-
-            using (var sw = new StringWriter())
-            {
-                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, partialViewName);
-                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
-                viewResult.View.Render(viewContext, sw);
-                return sw.GetStringBuilder().ToString();
-            }
-        }
        
     }
 }

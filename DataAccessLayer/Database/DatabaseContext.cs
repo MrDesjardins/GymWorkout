@@ -240,6 +240,7 @@ namespace DataAccessLayer.Database
             modelBuilder.Configurations.Add(new ExerciseConfiguration());
             modelBuilder.Configurations.Add(new MuscleConfiguration());
             modelBuilder.Configurations.Add(new MuscleGroupConfiguration());
+            modelBuilder.Entity<ApplicationUser>();
             //modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
 
             //modelBuilder.Entity<IdentityUserLogin>().HasKey(l => l.UserId);

@@ -22,6 +22,7 @@ namespace DataAccessLayer.Database
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ApplicationUser>();
             modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
         }
     }

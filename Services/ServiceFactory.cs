@@ -36,7 +36,5 @@ namespace Services
             WorkoutSessionExercise = new WorkoutSessionExerciseService(repositoryFactory, mapperFactory, account);
             Exercise = new ExerciseService(repositoryFactory, mapperFactory, Muscle, account);
         }
-
-       
     }
 }
