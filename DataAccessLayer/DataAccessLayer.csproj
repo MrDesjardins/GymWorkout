@@ -61,17 +61,24 @@
     <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\EntityConfiguration\ApplicationUserConfiguration.cs" />
     <Compile Include="Database\DatabaseConcurrencyException.cs" />
     <Compile Include="Database\DatabaseContext.cs" />
     <Compile Include="Database\DatabaseContextExtension.cs" />
     <Compile Include="Database\DatabaseValidationErrors.cs" />
+    <Compile Include="Database\EntityConfiguration\ExerciseConfiguration.cs" />
     <Compile Include="Database\FilteredDbSet.cs" />
     <Compile Include="Database\IDatabaseContext.cs" />
     <Compile Include="Database\IdentityContext.cs" />
     <Compile Include="Database\ImpersonateUserProvider.cs" />
     <Compile Include="Database\MigrationContextFactory.cs" />
+    <Compile Include="Database\EntityConfiguration\MuscleConfiguration.cs" />
+    <Compile Include="Database\EntityConfiguration\MuscleGroupConfiguration.cs" />
     <Compile Include="Database\RemoveValidation.cs" />
     <Compile Include="Database\UserProfileImpersonate.cs" />
+    <Compile Include="Database\EntityConfiguration\WorkoutConfiguration.cs" />
+    <Compile Include="Database\EntityConfiguration\WorkoutSessionConfiguration.cs" />
+    <Compile Include="Database\EntityConfiguration\WorkoutSessionExerciseConfiguration.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\BaseRepository.cs" />

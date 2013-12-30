@@ -4,11 +4,11 @@ using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Security;
 using BusinessLogic;
+using DataAccessLayer.Database.EntityConfiguration;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Model;
 using Model.Complex;
@@ -20,7 +20,7 @@ using System.Data.Entity.Core;
 
 namespace DataAccessLayer.Database
 {
-    public class DatabaseContext : DbContext, IDatabaseContext
+    public class DatabaseContext :IdentityDbContext<ApplicationUser>, IDatabaseContext
     {
         public const string DEFAULTCONNECTION = "DefaultConnection";
         public DatabaseContext()
@@ -240,12 +240,8 @@ namespace DataAccessLayer.Database
             modelBuilder.Configurations.Add(new ExerciseConfiguration());
             modelBuilder.Configurations.Add(new MuscleConfiguration());
             modelBuilder.Configurations.Add(new MuscleGroupConfiguration());
-            modelBuilder.Entity<ApplicationUser>();
-            //modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
+            modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
 
-            //modelBuilder.Entity<IdentityUserLogin>().HasKey(l => l.UserId);
-            //modelBuilder.Entity<IdentityRole>().HasKey(r => r.Id);
-            //modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
            
         }
 
@@ -259,64 +255,4 @@ namespace DataAccessLayer.Database
            
         }
     }
-
-
-
-    public class WorkoutConfiguration : EntityTypeConfiguration<Workout>
-    {
-        public WorkoutConfiguration()
-        {
-            base.HasMany(d => d.Sessions)
-                .WithRequired(d=>d.Workout)
-                .WillCascadeOnDelete(true);
-        }
-    }
-
-
-    public class WorkoutSessionConfiguration : EntityTypeConfiguration<WorkoutSession>
-    {
-        public WorkoutSessionConfiguration()
-        {
-            //this.HasMany(x => x.WorkoutSessionExercises)
-            //    .WithRequired(e => e.WorkoutSession)
-            //    .WillCascadeOnDelete(true);
-        }
-    }
-
-    public class WorkoutSessionExerciseConfiguration : EntityTypeConfiguration<WorkoutSessionExercise>
-    {
-        public WorkoutSessionExerciseConfiguration()
-        {
-            this.Ignore(x => x.RestBetweenExercices);
-            this.HasRequired(e=>e.WorkoutSession)
-                .WithMany(e=>e.WorkoutSessionExercises)
-                .WillCascadeOnDelete(true);
-        }
-    }
-
-    public class ExerciseConfiguration : EntityTypeConfiguration<Exercise>
-    {
-        public ExerciseConfiguration()
-        {
-            this.HasMany(x => x.WorkoutSessionExercices)
-            .WithRequired(e => e.Exercise)
-            .WillCascadeOnDelete(true);
-
-            this.HasRequired(d => d.Muscle).WithMany(d => d.Exercises);
-        }
-    }
-
-    public class MuscleConfiguration : EntityTypeConfiguration<Muscle>
-    {
-        public MuscleConfiguration()
-        {
-            //this.Property(m => m.Timestamp).IsConcurrencyToken().IsConcurrencyToken();
-        }
-    }
-
-    public class MuscleGroupConfiguration : EntityTypeConfiguration<MuscleGroup>
-    {
-    }
-
-   
 }
