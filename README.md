@@ -5,6 +5,12 @@ The project is a web workout software. You can build your workout. The project i
 
 This project as multiple articles in my Asp.Net MVC Blog
 
+##To create the database.
+1. Create a new database called "WorkoutPlannerDb" to the (localdb)\v11.0
+2. Execute the migration tool with these two commands:
+  1. update-database -ConfigurationTypeName "ConfigurationIdentity"
+  2. update-database -ConfigurationTypeName "Configuration"
+
 ##Series Articles
 - [Article #1: Asp.Net MVC Enterprise Quality Web Application](http://patrickdesjardins.com/blog/enterprise-asp-net-part-1-mvc-the-planification)
 - [Article #2: Asp.Net MVC Enterprise Quality Web Application Model](http://patrickdesjardins.com/blog/enterprise-asp-net-mvc-part-2-building-the-model)
