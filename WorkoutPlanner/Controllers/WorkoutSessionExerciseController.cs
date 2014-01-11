@@ -32,7 +32,7 @@ namespace WorkoutPlanner.Controllers
         public WorkoutSessionExerciseViewModel GetViewModel(WorkoutSessionExercise modelToChangeIntoViewModel)
         {
             var allExercices = ServiceFactory.Exercise.GetAll();
-            var vm = MapperFactory.WorkoutSessionExercise.GetViewModel(modelToChangeIntoViewModel);
+            var vm = MapperFactory.GetMapper<WorkoutSessionExercise, WorkoutSessionExerciseViewModel>().GetViewModel(modelToChangeIntoViewModel);
             vm.ListExercise = MapperFactory.Map<IEnumerable<Exercise>, IEnumerable<ExerciseSelector>>(allExercices);
             var exercise = vm.ListExercise.FirstOrDefault(d => Convert.ToInt32(d.Value) == vm.ExerciseId);
             if (exercise!=null)
@@ -87,7 +87,7 @@ namespace WorkoutPlanner.Controllers
         public ActionResult Edit(int id)
         {
             var x = ServiceFactory.WorkoutSessionExercise.Get(new WorkoutSessionExercise {Id = id});
-            var viewModel = MapperFactory.WorkoutSessionExercise.GetViewModel(x);
+            var viewModel = MapperFactory.GetMapper<WorkoutSessionExercise, WorkoutSessionExerciseViewModel>().GetViewModel(x);
             return View("Edit", viewModel);
         }
 
@@ -128,7 +128,7 @@ namespace WorkoutPlanner.Controllers
             {
                 modelToBind = ServiceFactory.WorkoutSessionExercise.Create(new WorkoutSessionExercise { Exercise = new Exercise { Id = idExercise }, WorkoutSession = new WorkoutSession { Id = workoutSessionId } });
             }
-            var viewModel = MapperFactory.WorkoutSessionExercise.GetViewModel(modelToBind);
+            var viewModel = MapperFactory.GetMapper<WorkoutSessionExercise, WorkoutSessionExerciseViewModel>().GetViewModel(modelToBind);
             var ajaxString = RenderPartialView("_WorkoutSessionExercisePartial", viewModel);
             return Json(new { Content = ajaxString, IsNew = !idSessionExercise.HasValue, IdWorkoutSessionExercise = viewModel.Id});
         }

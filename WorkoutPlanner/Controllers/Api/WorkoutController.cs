@@ -23,7 +23,7 @@ namespace WorkoutPlanner.Controllers.Api
         public IEnumerable<WorkoutViewModel> Get()
         {
             var x = ServiceFactory.Workout.GetAll();
-            var vm = MapperFactory.Workout.GetViewModelList(x);
+            var vm = MapperFactory.GetMapper<Workout,WorkoutViewModel>().GetViewModelList(x);
             return vm;
         }
 
@@ -32,16 +32,16 @@ namespace WorkoutPlanner.Controllers.Api
         {
             var x = ServiceFactory.Workout.Get(new Workout { Id = id });
             //throw new HttpResponseException(HttpStatusCode.NotFound);
-            var vm = MapperFactory.Workout.GetViewModel(x);
+            var vm = MapperFactory.GetMapper<Workout, WorkoutViewModel>().GetViewModel(x);
             return vm;
         }
 
         // POST api/values
         public HttpResponseMessage Post([FromBody]WorkoutViewModel viewModel)
         {
-            var model = MapperFactory.Workout.GetModel(viewModel);
+            var model = MapperFactory.GetMapper<Workout, WorkoutViewModel>().GetModel(viewModel);
             var newWorkout = ServiceFactory.Workout.Create(model);
-            var viewModelCreated = MapperFactory.Workout.GetViewModel(newWorkout);
+            var viewModelCreated = MapperFactory.GetMapper<Workout, WorkoutViewModel>().GetViewModel(newWorkout);
             var response = Request.CreateResponse<WorkoutViewModel>(HttpStatusCode.Created, viewModelCreated);
             string uri = Url.Link("DefaultApi", new { id = viewModel.Id });
             response.Headers.Location = new Uri(uri);
@@ -52,7 +52,7 @@ namespace WorkoutPlanner.Controllers.Api
         public void Put(int id, [FromBody]WorkoutViewModel viewModel)
         {
             viewModel.Id = id;
-            var model = MapperFactory.Workout.GetModel(viewModel);
+            var model = MapperFactory.GetMapper<Workout, WorkoutViewModel>().GetModel(viewModel);
             if (ServiceFactory.Workout.Update(model) == 0)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);

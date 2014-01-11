@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace Mappers.Base
 {
-    public class ClassMapper : AutoMapper.Profile, IMapper
+    public abstract class ClassMapper : AutoMapper.Profile, IMapper
     {
         public void Register()
         {
             this.Configure();
         }
+
+        public abstract Type GetSourceType();
+        public abstract Type GetDestinationType();
+
     }
 }

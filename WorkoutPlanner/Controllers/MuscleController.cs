@@ -28,7 +28,7 @@ namespace WorkoutPlanner.Controllers
         public ActionResult Index()
         {
             var x = ServiceFactory.Muscle.GetAll();
-            var viewModel = MapperFactory.Muscle.GetViewModelList(x);
+            var viewModel = MapperFactory.GetMapper<Muscle, MuscleViewModel>().GetViewModelList(x);
             return View(viewModel);
         }
 
@@ -37,7 +37,7 @@ namespace WorkoutPlanner.Controllers
         public ActionResult Details(int id)
         {
             var x = ServiceFactory.Muscle.Get(new Muscle{Id=id});
-            var viewModel = MapperFactory.Muscle.GetViewModel(x);
+            var viewModel = MapperFactory.GetMapper<Muscle, MuscleViewModel>().GetViewModel(x);
             return View("Details", viewModel);
         }
 
@@ -46,7 +46,7 @@ namespace WorkoutPlanner.Controllers
         public ActionResult Create()
         {
             var x = ServiceFactory.Muscle.New();
-            var viewModel = MapperFactory.Muscle.GetViewModel(x);
+            var viewModel = MapperFactory.GetMapper<Muscle, MuscleViewModel>().GetViewModel(x);
             return View("Create", viewModel);
         }
 
@@ -59,7 +59,7 @@ namespace WorkoutPlanner.Controllers
                 try
                 {
                     var fromDatabase = ServiceFactory.Muscle.Create(Model);
-                    var viewModelFromDatabase = MapperFactory.Muscle.GetViewModel(fromDatabase);
+                    var viewModelFromDatabase = MapperFactory.GetMapper<Muscle, MuscleViewModel>().GetViewModel(fromDatabase);
                     return View("Details", viewModelFromDatabase);
                 }
                 catch (ValidationErrors propertyErrors)
@@ -75,7 +75,7 @@ namespace WorkoutPlanner.Controllers
         public ActionResult Edit(int id)
         {
             var x = ServiceFactory.Muscle.Get(new Muscle{Id=id});
-            var viewModel = MapperFactory.Muscle.GetViewModel(x);
+            var viewModel = MapperFactory.GetMapper<Muscle, MuscleViewModel>().GetViewModel(x);
             return View("Edit", viewModel);
         }
         
@@ -97,7 +97,7 @@ namespace WorkoutPlanner.Controllers
                 
             }
             var x = ServiceFactory.Muscle.Get(Model);
-            var vm = MapperFactory.Muscle.GetViewModel(x);
+            var vm = MapperFactory.GetMapper<Muscle, MuscleViewModel>().GetViewModel(x);
             return View("Edit", vm);
         }
 

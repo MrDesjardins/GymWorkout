@@ -72,5 +72,17 @@ namespace Mappers.Base
         {
             PropertiesMap.AddModelViewModelToErrorsMap(propertyModel, propertyViewModel);
         }
+
+
+        public override Type GetSourceType()
+        {
+            return typeof(TModel);
+        }
+
+        public override Type GetDestinationType()
+        {
+            return typeof(TViewModel);
+        }
+
     }
 }

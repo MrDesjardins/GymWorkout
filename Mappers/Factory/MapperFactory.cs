@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using BusinessLogic.Sessions;
@@ -25,49 +26,27 @@ namespace Mappers.Factory
 
         public List<ConcreteMapper> MapperProfiles { get; set; }
 
-        private ModelViewModelMapper<Workout, WorkoutViewModel> _workout;
-        private ModelViewModelMapper<WorkoutSession, WorkoutSessionViewModel> _workoutSession;
-        private ModelViewModelMapper<WorkoutSessionExercise, WorkoutSessionExerciseViewModel> _workoutSessionExercise;
-        private ModelViewModelMapper<Exercise, ExerciseViewModel> _exercise;
-        private UserSessionDTOMapper _userSessionDTO;
-        private ModelViewModelMapper<ApplicationUser, UserProfileViewModel> _userProfile; 
-        private ModelViewModelMapper<Muscle, MuscleViewModel> _muscle; 
 
- 
-        #region Implementation of IMapperFactory
-
-        public ModelViewModelMapper<Workout, WorkoutViewModel> Workout
+        public MapperFactory()
         {
-            get { return _workout ?? (_workout = new WorkoutMapper()); }
-        }
-        public ModelViewModelMapper<WorkoutSession, WorkoutSessionViewModel> WorkoutSession
-        {
-            get { return _workoutSession ?? (_workoutSession = new WorkoutSessionMapper()); }
-        }
-        public ModelViewModelMapper<WorkoutSessionExercise, WorkoutSessionExerciseViewModel> WorkoutSessionExercise
-        {
-            get { return _workoutSessionExercise ?? (_workoutSessionExercise = new WorkoutSessionExerciseMapper()); }
+            var definitions = InstanciateAllClassesOfBaseType<IMapper>().ToList();
+            var concreteMappers = new List<ConcreteMapper>();
+            foreach (var definition in definitions)
+            {
+                definition.Register();
+                concreteMappers.Add(new ConcreteMapper(definition));
+            }
+            MapperProfiles = concreteMappers;
         }
 
-        public ModelViewModelMapper<Exercise, ExerciseViewModel> Exercise
+        private static IEnumerable<T> InstanciateAllClassesOfBaseType<T>()
         {
-            get { return _exercise ?? (_exercise = new ExerciseMapper()); }
+            var instances = (from type in typeof(T).Assembly.GetTypes()
+                             where typeof(T).IsAssignableFrom(type) && !type.IsAbstract
+                             select type).Select(d => (T)Activator.CreateInstance(d))
+                                         .ToArray();
+            return instances;
         }
-
-        public IUserSessionDTOMapper UserSessionDTO
-        {
-            get { return _userSessionDTO ?? (_userSessionDTO = new UserSessionDTOMapper()); }
-        }
-
-        public ModelViewModelMapper<ApplicationUser, UserProfileViewModel> UserProfile
-        {
-            get { return _userProfile ?? (_userProfile = new UserProfileMapper()); }
-        }
-        public ModelViewModelMapper<Muscle, MuscleViewModel> Muscle
-        {
-            get { return _muscle ?? (_muscle = new MuscleMapper()); }
-        }
-
         public TY Map<T, TY>(T source, TY destination)
         {
             return Mapper.Map(source, destination);
@@ -94,18 +73,16 @@ namespace Mappers.Factory
             return mapper.Profile as ModelViewModelMapper<TModel, TViewModel>;
         }
 
-        
-        #endregion
-
-        public MapperFactory()
+        public ModelViewModelMapper<TModel, TViewModel> GetMapper<TModel, TViewModel>()
         {
-            this.MapperProfiles = new List<ConcreteMapper>();
-            this.MapperProfiles.Add(new ConcreteMapper(typeof(Workout),typeof(WorkoutViewModel),this.Workout));
-            this.MapperProfiles.Add(new ConcreteMapper(typeof(WorkoutSession),typeof(WorkoutSessionViewModel),this.WorkoutSession));
-            this.MapperProfiles.Add(new ConcreteMapper(typeof(WorkoutSessionExercise),typeof(WorkoutSessionExerciseViewModel),this.WorkoutSessionExercise));
-            this.MapperProfiles.Add(new ConcreteMapper(typeof(Exercise),typeof(ExerciseViewModel),this.Exercise));
-        
-            this.MapperProfiles.Add(new ConcreteMapper(typeof(Muscle), typeof(MuscleViewModel), this.Muscle));
+            Type modelType = typeof(TModel);
+            Type viewModelType = typeof(TViewModel);
+            var mapper = this.MapperProfiles
+                                .Single(d => d.Model == modelType && d.ViewModel == viewModelType);
+
+            return mapper.Profile as ModelViewModelMapper<TModel, TViewModel>;
         }
+
+    
     }
 }

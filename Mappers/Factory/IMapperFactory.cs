@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Mappers.Base;
 using Mappers.Definitions;
@@ -14,16 +15,9 @@ namespace Mappers.Factory
     {
         List<ConcreteMapper> MapperProfiles { get; set; }
 
-        ModelViewModelMapper<Workout, WorkoutViewModel> Workout { get; }
-        ModelViewModelMapper<WorkoutSession, WorkoutSessionViewModel> WorkoutSession { get; }
-        ModelViewModelMapper<WorkoutSessionExercise, WorkoutSessionExerciseViewModel> WorkoutSessionExercise { get; }
-        ModelViewModelMapper<Exercise, ExerciseViewModel> Exercise { get; }
-        ModelViewModelMapper<ApplicationUser, UserProfileViewModel> UserProfile { get; }
-        IUserSessionDTOMapper UserSessionDTO { get; }
-        ModelViewModelMapper<Muscle, MuscleViewModel> Muscle { get; }
-
         TY Map<T, TY>(T source, TY destination);
         TY Map<T, TY>(T source);
         ModelViewModelMapper<T, T1> GetMapper<T, T1>(T model, T1 viewModel);
+        ModelViewModelMapper<TModel, TViewModel> GetMapper<TModel, TViewModel>();
     }
 }

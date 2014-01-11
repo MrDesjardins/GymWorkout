@@ -30,7 +30,7 @@ namespace WorkoutPlanner.Controllers
         public ActionResult Index()
         {
             var x = ServiceFactory.Exercise.GetAll();
-            var vm = MapperFactory.Exercise.GetViewModelList(x);
+            var vm = MapperFactory.GetMapper<Exercise, ExerciseViewModel>().GetViewModelList(x);
             return View(vm);
         }
 
@@ -39,7 +39,7 @@ namespace WorkoutPlanner.Controllers
         {
             var x = ServiceFactory.Exercise.Get(new Exercise { Id = id });
             var allMuscles = ServiceFactory.Muscle.GetAll();
-            var vm = MapperFactory.Exercise.GetViewModel(x);
+            var vm = MapperFactory.GetMapper<Exercise, ExerciseViewModel>().GetViewModel(x);
             vm.ListMuscles = MapperFactory.Map<IEnumerable<Muscle>,IEnumerable<MuscleSelector>>(allMuscles);
             foreach (var allMuscle in vm.ListMuscles.Where(allMuscle => Convert.ToInt32(allMuscle.Value) == x.Muscle.Id))
             {
@@ -53,7 +53,7 @@ namespace WorkoutPlanner.Controllers
         public ActionResult Create()
         {
             var x = ServiceFactory.Exercise.New();
-            var vm = MapperFactory.Exercise.GetViewModel(x);
+            var vm = MapperFactory.GetMapper<Exercise, ExerciseViewModel>().GetViewModel(x);
             vm.ListMuscles = ServiceFactory.Muscle.GetAllSelector();
             return View("Create",vm);
         }
@@ -83,7 +83,7 @@ namespace WorkoutPlanner.Controllers
         public ActionResult Edit(int id)
         {
             var x = ServiceFactory.Exercise.Get(new Exercise { Id = id });
-            var vm = MapperFactory.Exercise.GetViewModel(x);
+            var vm = MapperFactory.GetMapper<Exercise, ExerciseViewModel>().GetViewModel(x);
             return View("Edit", vm);
         }
 
@@ -95,7 +95,7 @@ namespace WorkoutPlanner.Controllers
                 ServiceFactory.Exercise.Update(Model);
             }
             var x = ServiceFactory.Exercise.Get(Model);
-            var viewModelToReturn = MapperFactory.Exercise.GetViewModel(x);
+            var viewModelToReturn = MapperFactory.GetMapper<Exercise, ExerciseViewModel>().GetViewModel(x);
             return View("Edit", viewModelToReturn);
         }
 

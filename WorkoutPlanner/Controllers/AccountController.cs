@@ -30,13 +30,11 @@ namespace WorkoutPlanner.Controllers
     {
 
         private readonly ISessionHandler _session;
-        private readonly IMapperFactory _mapperFactory;
 
         public AccountController(IServiceFactory serviceFactory, IMapperFactory mapperFactory, IUserProvider userProvider, ISessionHandler sessionHandler)
             : base(serviceFactory, mapperFactory, userProvider, sessionHandler)
         {
             _session = sessionHandler;
-            _mapperFactory = mapperFactory;
             UserManager = base.ServiceFactory.Account.GetUserManager();
         }
 

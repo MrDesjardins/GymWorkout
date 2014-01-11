@@ -24,7 +24,7 @@ namespace WorkoutPlannerApi.Controllers
         public IEnumerable<WorkoutViewModel> GetWorkouts()
         {
             var x = ServiceFactory.Workout.GetAll();
-            var vm = MapperFactory.Workout.GetViewModelList(x);
+            var vm = MapperFactory.GetMapper<Workout, WorkoutViewModel>().GetViewModelList(x);
             return vm;
         }
 
@@ -33,16 +33,16 @@ namespace WorkoutPlannerApi.Controllers
         {
             var x = ServiceFactory.Workout.Get(new Workout { Id = id });
             //throw new HttpResponseException(HttpStatusCode.NotFound);
-            var vm = MapperFactory.Workout.GetViewModel(x);
+            var vm = MapperFactory.GetMapper<Workout, WorkoutViewModel>().GetViewModel(x);
             return vm;
         }
 
         // POST api/values
         public HttpResponseMessage PostWorkout([FromBody]WorkoutViewModel viewModel)
         {
-            var model = MapperFactory.Workout.GetModel(viewModel);
+            var model = MapperFactory.GetMapper<Workout, WorkoutViewModel>().GetModel(viewModel);
             var modelCreated = ServiceFactory.Workout.Create(model);
-            var viewModelCreated = MapperFactory.Workout.GetViewModel(modelCreated);
+            var viewModelCreated = MapperFactory.GetMapper<Workout, WorkoutViewModel>().GetViewModel(modelCreated);
             var response = Request.CreateResponse<WorkoutViewModel>(HttpStatusCode.Created, viewModelCreated);
             string uri = Url.Link("DefaultApi", new { id = viewModel.Id });
             response.Headers.Location = new Uri(uri);
@@ -53,7 +53,7 @@ namespace WorkoutPlannerApi.Controllers
         public void PutWorkout(int id, [FromBody]WorkoutViewModel viewModel)
         {
             viewModel.Id = id;
-            var model = MapperFactory.Workout.GetModel(viewModel);
+            var model = MapperFactory.GetMapper<Workout, WorkoutViewModel>().GetModel(viewModel);
             if (ServiceFactory.Workout.Update(model) == 0)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);

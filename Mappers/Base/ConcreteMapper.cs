@@ -15,6 +15,13 @@ namespace Mappers.Base
             Profile = profile;
         }
 
+        public ConcreteMapper(IMapper profile)
+        {
+            Model = profile.GetSourceType();
+            ViewModel = profile.GetDestinationType();
+            Profile = profile;
+        }
+
         public Type Model { get; private set; }
         public Type ViewModel { get; private set; }
         public IMapper Profile { get; private set; }

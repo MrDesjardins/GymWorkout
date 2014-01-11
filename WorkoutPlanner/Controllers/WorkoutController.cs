@@ -109,9 +109,9 @@ namespace WorkoutPlanner.Controllers
         {
             var modelToBind = ServiceFactory.Workout.Get(new Workout { Id = idWorkout });
             var allExercisesModelAvailable = ServiceFactory.Exercise.GetAll();
-            var allExercisesAvailable = MapperFactory.Exercise.GetViewModelList(allExercisesModelAvailable);
+            var allExercisesAvailable = MapperFactory.GetMapper<Exercise, ExerciseViewModel>().GetViewModelList(allExercisesModelAvailable);
 
-            var viewModel = MapperFactory.Workout.GetViewModel(modelToBind);
+            var viewModel = MapperFactory.GetMapper<Workout, WorkoutViewModel>().GetViewModel(modelToBind);
             viewModel.AvailablesExercise = allExercisesAvailable;
             return viewModel;
         }

@@ -6,8 +6,8 @@ using Model;
 
 namespace Mappers.Implementations
 {
-    
-    public class UserSessionDTOMapper : ClassMapper, IUserSessionDTOMapper
+
+    public class UserSessionDTOMapper : ModelViewModelMapper<ApplicationUser, UserSessionDTO>, IUserSessionDTOMapper
     {
         public UserSessionDTO GetDTO(ApplicationUser session)
         {

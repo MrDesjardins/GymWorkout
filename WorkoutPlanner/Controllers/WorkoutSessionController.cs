@@ -41,7 +41,7 @@ namespace WorkoutPlanner.Controllers
         public ActionResult Details(int id)
         {
             var x = ServiceFactory.WorkoutSession.Get(new WorkoutSession { Id = id });
-            var viewModel = MapperFactory.WorkoutSession.GetViewModel(x);
+            var viewModel = MapperFactory.GetMapper<WorkoutSession, WorkoutSessionViewModel>().GetViewModel(x);
             return View("Details",viewModel);
         }
 
@@ -81,7 +81,7 @@ namespace WorkoutPlanner.Controllers
         public ActionResult Edit(int id)
         {
             var x = ServiceFactory.WorkoutSession.Get(new WorkoutSession { Id = id });
-            var viewModel = MapperFactory.WorkoutSession.GetViewModel(x);
+            var viewModel = MapperFactory.GetMapper<WorkoutSession, WorkoutSessionViewModel>().GetViewModel(x);
             return View("Edit", viewModel);
         }
 
@@ -94,7 +94,7 @@ namespace WorkoutPlanner.Controllers
             {
                 ServiceFactory.WorkoutSession.Update(Model);
             }
-            viewModel = MapperFactory.WorkoutSession.GetViewModel(Model);
+            viewModel = MapperFactory.GetMapper<WorkoutSession, WorkoutSessionViewModel>().GetViewModel(Model);
             return View("Edit", viewModel);
         }
 

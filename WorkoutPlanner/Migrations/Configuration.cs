@@ -1,17 +1,10 @@
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
 using DataAccessLayer.Database;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Model;
 using Model.Complex;
-using Roles = System.Web.Security.Roles;
-using WorkoutPlanner.Database;
 using System.Data.Entity.Migrations;
-using Microsoft.Owin.Security;
 using System;
-using System.Data.Entity.Migrations;
 using System.Linq;
 
 namespace WorkoutPlanner.Migrations
